@@ -1,5 +1,12 @@
 # PAW 🐾
 
+[![pub package](https://img.shields.io/pub/v/paw.svg?logo=dart&logoColor=00b9fc)](https://pub.dev/packages/paw)
+[![CI](https://img.shields.io/github/actions/workflow/status/AdityaMotale/paw/unit_tests.yaml?branch=main&logo=github-actions&logoColor=white)](https://github.com/AdityaMotale/paw/actions)
+[![Last Commits](https://img.shields.io/github/last-commit/AdityaMotale/paw?logo=git&logoColor=white)](https://github.com/AdityaMotale/paw/commits/main)
+[![Pull Requests](https://img.shields.io/github/issues-pr/AdityaMotale/paw?logo=github&logoColor=white)](https://github.com/AdityaMotale/paw/pulls)
+[![Code size](https://img.shields.io/github/languages/code-size/AdityaMotale/paw?logo=github&logoColor=white)](https://github.com/AdityaMotale/paw)
+[![License](https://img.shields.io/github/license/AdityaMotale/paw?logo=open-source-initiative&logoColor=green)](https://github.com/AdityaMotale/paw/blob/main/LICENSE)
+
 Paw is a compact, well-organized, and user-friendly logging tool for your apps. It's designed to log
 your code's journey with structure and clarity, leaving a trace of each step like a paw print.
 
@@ -19,7 +26,20 @@ your code's journey with structure and clarity, leaving a trace of each step lik
 
 ## Getting Started
 
-To start using Paw in your project, first install it and then initialize it at the root of your project.
+Let's get started with Paw!
+
+### Installation
+
+You can directly install it by adding `paw: ^0.0.2` to your _pubspec.yaml_ dependencies section.
+
+You can also add 🐾 to your project by executing,
+
+- Flutter - `flutter pub add paw`
+- Dart - `dart pub add paw`
+
+### Setup
+
+To start using Paw in your project first initialize it at the root of your project.
 
 ```dart
 // Initialize Paw logger at the root of your project
@@ -42,6 +62,8 @@ an example of what Paw's outputs look like:
 ![Paw Showcase](./assets/paw_showcase.png)
 
 ## Documentation
+
+Also have in depth look at all the public [API references](https://pub.dev/documentation/paw/latest/paw/Paw-class.html#instance-methods)
 
 ### `Paw`
 
@@ -100,4 +122,4 @@ try {
 
 ## Contributing
 
-We welcome contributions! If you'd like to improve _Paw_, please open an issue or an PR with your suggested changes. Happy Coding 🐾!
+We welcome contributions! If you'd like to improve _Paw_, please open an issue or an PR with your suggested changes on this [repo](https://github.com/AdityaMotale/paw). Happy Coding 🐾!
