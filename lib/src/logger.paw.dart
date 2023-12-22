@@ -43,7 +43,9 @@ class Paw {
   ///
   final bool shouldIncludeSourceInfo;
 
-  // Singleton instance
+  ///
+  /// Singleton instance of Paw
+  ///
   static Paw? _instance;
 
   ///

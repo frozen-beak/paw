@@ -1,3 +1,4 @@
+///
 /// ANSI color codes, also known as ANSI escape codes,
 /// are special sequences of characters used to control
 /// the formatting and color of text displayed on terminals or
@@ -8,7 +9,7 @@
 ///
 /// To explore more ANSI colors, refer to:
 /// [Various ANSI Color Codes](https://talyian.github.io/ansicolors/)
-
+///
 ///
 /// ANSI escape code to add at the end of every line
 /// This works like an ending tag in HTML which closes the tag.
