@@ -1,21 +1,35 @@
 import 'package:paw/paw.dart';
 
+class MyLogger extends PawInterface {
+  MyLogger({
+    super.name = "MyApp",
+    super.maxStackTraces = 5,
+    super.shouldIncludeSourceInfo = false,
+    super.shouldPrintLogs = true,
+    super.shouldPrintName = true,
+  });
+
+  @override
+  void info(String msg, {StackTrace? stackTrace}) {
+    super.info(msg, stackTrace: stackTrace);
+
+    print("Some task can be done after logging info");
+  }
+}
+
 ///
-/// This is an example showcasing how to use the Paw logging library in Flutter.
-/// You can run this example by executing `dart example/main.dart` in your terminal.
+/// This is an example showcasing how to use the PawInterface to implement
+/// your custom logger in dart / flutter applications
+///
+/// You can run this example by executing `dart example/custom_logger_example.dart`
+/// in your terminal.
 ///
 void main() {
   ///
-  /// Create an instance of [paw] with custom configurations. This is how you interact with
+  /// Create an instance of custom [logger]. This is how you interact with
   /// the logging system.
   ///
-  final paw = Paw(
-    title: "MyApp",
-    shouldIncludeSourceFileInfo: true,
-    shouldIncludeTitle: true,
-    shouldPrint: true,
-    stackTraceToPrint: 5,
-  );
+  final logger = MyLogger();
 
   ///
   /// Log an informational message.
@@ -23,14 +37,14 @@ void main() {
   /// Use this for general app flow information, which could be helpful for
   /// understanding the app's behavior.
   ///
-  paw.info("This is an informational message");
+  logger.info("This is an informational message");
 
   ///
   /// Log a warning message.
   /// Warnings are useful for non-critical issues that should be
   /// brought to attention.
   ///
-  paw.warn("Be aware! This is a warning message");
+  logger.warn("Be aware! This is a warning message");
 
   ///
   /// Log a data object for debugging.
@@ -38,7 +52,7 @@ void main() {
   /// This is particularly useful for logging structured data, making it
   /// easier to understand complex data states.
   ///
-  paw.debug({'key': 'value', 'count': 42});
+  logger.debug({'key': 'value', 'count': 42});
 
   ///
   /// Log an error with additional context.
@@ -51,7 +65,7 @@ void main() {
     throw UnsupportedError("Oops! You've forgotten to implement this feature");
   } catch (e, stackTrace) {
     // Log an error with a message, error object, and stack trace
-    paw.error(
+    logger.error(
       'An unexpected error occurred',
       stackTrace: stackTrace,
       error: UnsupportedError(

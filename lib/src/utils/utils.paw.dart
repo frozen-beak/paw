@@ -119,7 +119,7 @@ class PawUtils {
     // extract source file stack trace from the current stack trace
     final String source = stackTrace.toString().split('\n').firstWhere(
           (element) =>
-              !element.contains('PawPrint') &&
+              !element.contains('Paw') &&
               !element.contains(
                 'PawUtils',
               ),
@@ -164,29 +164,35 @@ class PawUtils {
     StackTrace? stackTrace, {
     required int maxLines,
   }) {
-    if (stackTrace == null) {
-      return '';
+    try {
+      if (stackTrace == null) {
+        return '';
+      }
+
+      final stackTraceList = stackTrace.toString().split('\n');
+
+      final sanitizedMaxLength =
+          stackTraceList.length < maxLines ? stackTraceList.length : maxLines;
+
+      final sanitizedList = stackTraceList.sublist(0, sanitizedMaxLength);
+
+      final coloredSt = sanitizedList
+          .map(
+            (line) => "${AnsiFgColor.lightPink.code}$line",
+          )
+          .toList()
+          .join('\n');
+
+      final bgColor = AnsiBgColor.lightPink.code;
+      final fgColor = AnsiFgColor.black.code;
+      final styleCode = AnsiStyle.italic.code;
+
+      final title = "$bgColor$fgColor$styleCode stacktrace $escapeCode";
+
+      return '$title \n$coloredSt';
+    } catch (e) {
+      return "$stackTrace [stacktrace error -> $e]";
     }
-
-    final stackTraceList = stackTrace.toString().split('\n').sublist(
-          0,
-          maxLines,
-        );
-
-    final coloredSt = stackTraceList
-        .map(
-          (line) => "${AnsiFgColor.lightPink.code}$line",
-        )
-        .toList()
-        .join('\n');
-
-    final bgColor = AnsiBgColor.lightPink.code;
-    final fgColor = AnsiFgColor.black.code;
-    final styleCode = AnsiStyle.italic.code;
-
-    final title = "$bgColor$fgColor$styleCode stacktrace $escapeCode";
-
-    return '$title \n$coloredSt';
   }
 
   ///
@@ -264,6 +270,29 @@ class PawUtils {
     } catch (e) {
       // Return an error message if any exception occurs during conversion.
       return 'Unable to convert the object. \n${getPrettyError(e)}';
+    }
+  }
+
+  ///
+  /// Prints the log message to the console when the application if [shouldPrintLog]
+  /// is set to `true`
+  ///
+  /// This internal method is used to print the log message to the console using
+  /// [print]. The log will be printed only when the [shouldPrintLog] is set to
+  /// `true` by the user. This ensures that log messages are displayed only when
+  /// user want them to be displayed
+  ///
+  /// Logs will not be printed if [shouldPrintLog] is set to `false` by user
+  ///
+  /// Example:
+  /// ```
+  /// // Prints a plain text log message
+  /// PawUtils.log('This is a log message');
+  /// ```
+  ///
+  static void log(String log, {bool shouldPrintLog = true}) {
+    if (shouldPrintLog) {
+      print(log);
     }
   }
 }
