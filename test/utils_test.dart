@@ -1,18 +1,23 @@
 import 'dart:convert';
-
-import 'package:paw/src/colors/ansi.paw.dart';
 import 'package:test/test.dart';
 
+import 'package:paw/src/colors/ansi.paw.dart';
 import 'package:paw/src/utils/utils.paw.dart';
 
 void main() {
   group('getDecoratedName', () {
     test('Should return an empty string if [shouldPrintName] is false', () {
-      expect(PawUtils.getDecoratedName("Paw", false), equals(''));
+      final decoratedName = PawUtils.getDecoratedName("Paw", false);
+
+      expect(decoratedName, equals(''));
+      expect(decoratedName, isNot(endsWith(escapeCode)));
     });
 
     test('Should return an empty string if [name] is an empty string', () {
-      expect(PawUtils.getDecoratedName('', true), equals(''));
+      final decoratedName = PawUtils.getDecoratedName("", true);
+
+      expect(decoratedName, equals(''));
+      expect(decoratedName, isNot(endsWith(escapeCode)));
     });
 
     test(
@@ -24,16 +29,21 @@ void main() {
 
         expect(decoratedName, isA<String>());
         expect(decoratedName, contains(name));
+
+        expect(decoratedName, endsWith(escapeCode));
       },
     );
   });
 
   group('getDecoratedString', () {
     test('Should return a valid decorated string', () {
-      expect(
-        PawUtils.getDecoratedString('test message', fg: AnsiFgColor.black),
-        isA<String>(),
+      final decoratedString = PawUtils.getDecoratedString(
+        'test message',
+        fg: AnsiFgColor.black,
       );
+
+      expect(decoratedString, isA<String>());
+      expect(decoratedString, endsWith(escapeCode));
     });
   });
 
@@ -60,13 +70,19 @@ void main() {
 
   group('getPrettyStackTrace', () {
     test('Returns empty string for null stack trace', () {
-      expect(PawUtils.getPrettyStackTrace(null, maxLines: 5), equals(''));
+      final stackTrace = PawUtils.getPrettyStackTrace(null, maxLines: 5);
+
+      expect(stackTrace, equals(''));
+      expect(stackTrace, isNot(endsWith(escapeCode)));
     });
   });
 
   group('getPrettyError', () {
     test('Returns empty string for null error', () {
-      expect(PawUtils.getPrettyError(null), equals(''));
+      final prettyError = PawUtils.getPrettyError(null);
+
+      expect(prettyError, equals(''));
+      expect(prettyError, isNot(endsWith(escapeCode)));
     });
   });
 
@@ -75,15 +91,18 @@ void main() {
       var simpleObject = {'name': 'John', 'age': 25, 'city': 'New York'};
       var expectedOutput = jsonEncode(simpleObject);
 
-      expectedOutput = const JsonEncoder.withIndent('  ')
-          .convert(json.decode(expectedOutput));
+      expectedOutput = const JsonEncoder.withIndent('  ').convert(
+        json.decode(expectedOutput),
+      );
 
       expectedOutput = expectedOutput
           .split('\n')
           .map((line) => '\x1b[38;5;15m$line')
           .join('\n');
 
-      expect(PawUtils.getPrettyObject(simpleObject), equals(expectedOutput));
+      final prettyObject = PawUtils.getPrettyObject(simpleObject);
+
+      expect(prettyObject, equals(expectedOutput));
     });
 
     test('Handles null object', () {
