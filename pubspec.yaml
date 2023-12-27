@@ -1,6 +1,6 @@
 name: paw
 description: Small, organised and easy to use logger for your flutter and dart apps.
-version: 0.0.2
+version: 0.0.3
 repository: https://github.com/AdityaMotale/paw
 
 environment:
