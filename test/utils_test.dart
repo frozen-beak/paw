@@ -53,7 +53,7 @@ void main() {
 
       expectedOutput = expectedOutput
           .split('\n')
-          .map((line) => '\x1b[38;5;15m$line')
+          .map((line) => '${DarkTheme().object.code}$line')
           .join('\n');
 
       final prettyObject = PawUtils.getPrettyObject(
