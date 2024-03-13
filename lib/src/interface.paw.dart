@@ -1,5 +1,5 @@
 import 'colors/ansi.paw.dart';
-import 'themes/core/interface.theme.paw.dart';
+import 'themes/interface.theme.paw.dart';
 import 'utils/log_levels.utils.paw.dart';
 import 'utils/utils.paw.dart';
 
