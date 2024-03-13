@@ -1,20 +1,25 @@
+import '../paw.dart';
 import 'colors/ansi.paw.dart';
 import 'themes/interface.theme.paw.dart';
-import 'utils/log_levels.utils.paw.dart';
 import 'utils/utils.paw.dart';
 
 ///
-/// `PawInterface` - An Abstract class to help build a custom logger with
-/// help of [Paw 🐾]
+/// `PawInterface` is an abstract class for building custom loggers with Paw.
 ///
-/// Example:
+/// ### Example:
 /// ```
 /// class MyLogger extends PawInterface {
-///   MyLogger() : super(name: 'MyLogger');
+///   MyLogger({
+///     super.name = "MyApp",
+///     super.maxStackTraces = 5,
+///     super.shouldIncludeSourceInfo = false,
+///     super.shouldPrintLogs = true,
+///     super.shouldPrintName = true,
+///   }) : super(currentTheme: DarkTheme());
 ///
 ///   @override
-///   void info(String msg, {StackTrace? stackTrace}) {
-///     super.info(msg, stackTrace: stackTrace);///
+///   void info(String message, {StackTrace? stackTrace}) {
+///     super.info(message, stackTrace: stackTrace);
 ///
 ///     // do something here if needed
 ///   }
@@ -24,38 +29,40 @@ import 'utils/utils.paw.dart';
 ///   final logger = MyLogger();
 ///
 ///   logger.info('This is an informational message');
-///   logger.warn('This is a warning message');
+///   logger.trace('This is trace log');
 ///   logger.debug({'key': 'value', 'count': 42});
-///   logger.error('An unexpected error occurred');
+///   logger.warn('This is a warning message');
+///   logger.error('An unexpected error occurred', error: e);
+///   logger.fetal('An fetal error occurred', error: e, stackTrace: stackTrace);
 /// }
 /// ```
 ///
 abstract class PawInterface {
   ///
-  /// Constructor for the PAW
+  /// Constructs a new instance of `PawInterface`.
   ///
   PawInterface({
-    required this.name,
-    required this.currentTheme,
+    PawTheme? currentTheme,
+    this.name = "Paw",
     this.shouldPrintLogs = true,
     this.shouldPrintName = true,
     this.maxStackTraces = 5,
     this.shouldIncludeSourceInfo = true,
     this.logLevel,
-  });
+  }) : currentTheme = currentTheme ?? DarkTheme();
 
   ///
-  /// Name to be printed
+  /// Custom name for the logger, default to "Paw"
   ///
   final String name;
 
   ///
-  /// Max amount of stack traces allowed to print
+  /// Max number of stack traces allowed to print
   ///
   final int maxStackTraces;
 
   ///
-  /// Indicates to print name on the console or not
+  /// Control whether Paw should print logs or not
   ///
   final bool shouldPrintName;
 
@@ -70,27 +77,28 @@ abstract class PawInterface {
   final bool shouldIncludeSourceInfo;
 
   ///
-  /// Color theme for styling Paw
+  /// Color theme for styling Paw, default to `DarkTheme`
   ///
   final PawTheme currentTheme;
 
   ///
-  /// Set a specific log level to only print the logs for specific level and
-  /// hide other levels
+  /// Specify a specific log level to print and only print logs for that level
+  /// and hide others.
+  ///
+  /// If set to `null`, all log levels will be printed.
   ///
   final PawLogLevels? logLevel;
 
   ///
   /// Logs an informational message to the debug console.
   ///
-  /// This method is used to log informational messages to the debug console
-  /// with formatted decorations and additional information such as source file,
+  /// This function also logs additional information such as source file,
   /// timestamp, and the provided message.
   ///
-  /// Example:
+  /// ### Example:
   /// ```
   /// // Log an informational message
-  /// Paw().info('This is an informational message');
+  /// Paw.info('This is an informational message');
   /// ```
   ///
   void info(
@@ -128,14 +136,13 @@ abstract class PawInterface {
   ///
   /// Log detailed tracing information. Ideal for high-volume logs.
   ///
-  /// This method is used to log tracing info to the debug console with
-  /// formatted decorations and additional information such as source file,
+  /// This function also logs additional information such as source file,
   /// timestamp, and the provided message.
   ///
-  /// Example:
+  /// ### Example:
   /// ```
-  /// // Log tracing info
-  /// Paw().trace('Paw is up and running!');
+  /// // Log an informational message
+  /// Paw.trace('This is a trace log message');
   /// ```
   ///
   void trace(
@@ -171,16 +178,16 @@ abstract class PawInterface {
   }
 
   ///
-  /// Logs an object or data for preview during debugging.
+  /// Log debugging information. Essential for troubleshooting and understanding
+  /// complex flows.
   ///
-  /// This method is used to log debug messages containing an object or data structure
-  /// for preview purposes during debugging. It prints formatted decorations, source file
-  /// information, timestamp, and a prettified representation of the provided object.
+  /// This function also logs additional information such as source file,
+  /// timestamp.
   ///
-  /// Example:
+  /// ### Example:
   /// ```
-  /// // Log a debug message with an object for debugging
-  /// Paw().debug({'key': 'value', 'count': 42});
+  /// // Log an informational message
+  /// Paw.trace('This is a trace log message');
   /// ```
   ///
   void debug(
@@ -207,25 +214,24 @@ abstract class PawInterface {
       stackTrace: stackTrace,
     );
 
-    final decoratedObject = PawUtils.getPrettyObject(
+    final prettyObject = PawUtils.getPrettyObject(
       obj,
       currentTheme: currentTheme,
     );
 
-    PawUtils.log("$decoratedHeading$decoratedInfoCard \n$decoratedObject");
+    PawUtils.log("$decoratedHeading$decoratedInfoCard \n$prettyObject");
   }
 
   ///
-  /// Logs a warning message to the debug console.
+  /// Log warnings. Use this for non-critical issues that should be noted.
   ///
-  /// This method is used to log warning messages to the debug console
-  /// with formatted decorations and additional information such as source file,
+  /// This function also logs additional information such as source file,
   /// timestamp, and the provided warning message.
   ///
-  /// Example:
+  /// ### Example:
   /// ```
-  /// // Log a warning message
-  /// Paw().warn('This is a warning message');
+  /// // Log an informational message
+  /// Paw.warn('This is a warning log message to make you alert!');
   /// ```
   ///
   void warn(
@@ -262,20 +268,19 @@ abstract class PawInterface {
   }
 
   ///
-  /// Logs an error message with details, including the error and stack trace.
+  /// Log errors with detailed information, including error objects and stack
+  /// traces. Critical for error tracking.
   ///
-  /// This method is used to log error messages with formatted decorations,
-  /// source file information, timestamp, the provided error message, and the
-  /// associated stack trace. It provides a comprehensive view of errors during
-  /// debugging.
+  /// This function also logs additional information such as source file,
+  /// timestamp, and the provided error message.
   ///
-  /// Example:
+  /// ### Example:
   /// ```
   /// try {
   ///   throw UnsupportedError("Oops! You've forgotten to implement this feature");
   /// } catch (e, stackTrace) {
   ///   // Log an error with a message, error object, and stack trace
-  ///   Paw().error('An unexpected error occurred', error: e, stackTrace: stackTrace);
+  ///   Paw.error('An unexpected error occurred', error: e, stackTrace: stackTrace);
   /// }
   /// ```
   ///
@@ -309,7 +314,7 @@ abstract class PawInterface {
       fgColor: currentTheme.errorMessage,
     );
 
-    final decoratedError = PawUtils.getPrettyError(
+    final prettyError = PawUtils.getPrettyError(
       error,
       currentTheme: currentTheme,
     );
@@ -326,26 +331,25 @@ abstract class PawInterface {
     );
 
     PawUtils.log("$decoratedHeading$decoratedInfoCard $decoratedMessage");
+
     PawUtils.log(
-      "$decoratedDivider\n$decoratedError\n${prettyStacktrace.isNotEmpty ? "\n$prettyStacktrace\n" : ""}$decoratedDivider",
+      "$decoratedDivider\n$prettyError\n${prettyStacktrace.isNotEmpty ? "\n$prettyStacktrace\n" : ""}$decoratedDivider",
     );
   }
 
   ///
-  /// Logs an error message with details, including the error and stack trace.
+  /// Logs a serious error with details, including the error and stack trace.
   ///
-  /// This method is used to log error messages with formatted decorations,
-  /// source file information, timestamp, the provided error message, and the
-  /// associated stack trace. It provides a comprehensive view of errors during
-  /// debugging.
+  /// This function also logs additional information such as source file,
+  /// timestamp, and the provided error message.
   ///
-  /// Example:
+  /// ### Example:
   /// ```
   /// try {
-  ///   throw UnsupportedError("Oops! You've forgotten to implement this feature");
+  ///   throw UnsupportedError("Oops! The code is causing some serious issues");
   /// } catch (e, stackTrace) {
-  ///   // Log an error with a message, error object, and stack trace
-  ///   Paw().error('An unexpected error occurred', error: e, stackTrace: stackTrace);
+  ///   // Log a fetal error with a message, error object, and stack trace
+  ///   Paw.fetal('An serious error occurred', error: e, stackTrace: stackTrace);
   /// }
   /// ```
   ///
@@ -379,7 +383,7 @@ abstract class PawInterface {
       fgColor: currentTheme.errorMessage,
     );
 
-    final decoratedError = PawUtils.getPrettyError(
+    final prettyError = PawUtils.getPrettyError(
       error,
       currentTheme: currentTheme,
     );
@@ -396,8 +400,9 @@ abstract class PawInterface {
     );
 
     PawUtils.log("$decoratedHeading$decoratedInfoCard $decoratedMessage");
+
     PawUtils.log(
-      "$decoratedDivider\n$decoratedError\n${prettyStacktrace.isNotEmpty ? "\n$prettyStacktrace\n" : ""}$decoratedDivider",
+      "$decoratedDivider\n$prettyError\n${prettyStacktrace.isNotEmpty ? "\n$prettyStacktrace\n" : ""}$decoratedDivider",
     );
   }
 }
