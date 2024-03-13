@@ -74,13 +74,7 @@ enum AnsiForegroundColors {
   ///
   /// Red foreground color representing `rgb(204, 0, 0)`
   ///
-  red("\x1b[38;5;9m"),
-
-  oldBlack("\x1B[30m"),
-  oldWhite("\x1b[38;5;15m"),
-  yellow("\x1b[38;5;11m"),
-  pink("\x1b[38;5;213m"),
-  lightPink("\x1b[38;5;225m");
+  red("\x1b[38;5;9m");
 
   ///
   /// Constructor for defining a foreground color code.
@@ -149,13 +143,7 @@ enum AnsiBackgroundColor {
   ///
   /// Gray background color representing `rgb(173, 173, 173)`
   ///
-  gray("\x1b[48;5;238m"),
-
-  white("\x1b[48;5;15m"),
-  yellow("\x1b[48;5;11m"),
-  red("\x1b[48;5;196m"),
-  orange("\x1b[48;5;208m"),
-  lightPink("\x1b[48;5;225m");
+  gray("\x1b[48;5;238m");
 
   ///
   /// Constructor for defining a background color code.
