@@ -96,13 +96,13 @@ abstract class PawInterface {
 
     final decoratedLevel = PawUtils.getDecoratedString(
       "INFO",
-      fg: AnsiFgColor.black,
-      bg: AnsiBgColor.yellow,
+      fg: AnsiForegroundColors.oldBlack,
+      bg: AnsiBackgroundColor.yellow,
     );
 
     final decoratedLog = PawUtils.getDecoratedString(
       "${sourceFileInfo.isEmpty ? '' : '$sourceFileInfo | '}$timeStamp | $msg",
-      fg: AnsiFgColor.yellow,
+      fg: AnsiForegroundColors.yellow,
     );
 
     PawUtils.log("$title$decoratedLevel $decoratedLog");
@@ -139,13 +139,13 @@ abstract class PawInterface {
 
     final decoratedLevel = PawUtils.getDecoratedString(
       "WARN",
-      fg: AnsiFgColor.lightPink,
-      bg: AnsiBgColor.pink,
+      fg: AnsiForegroundColors.lightPink,
+      bg: AnsiBackgroundColor.pink,
     );
 
     final decoratedLog = PawUtils.getDecoratedString(
       "${sourceFileInfo.isEmpty ? '' : '$sourceFileInfo | '}$timeStamp | $msg",
-      fg: AnsiFgColor.pink,
+      fg: AnsiForegroundColors.pink,
     );
 
     PawUtils.log("$title$decoratedLevel $decoratedLog");
@@ -182,13 +182,13 @@ abstract class PawInterface {
 
     final decoratedLevel = PawUtils.getDecoratedString(
       "DEBUG",
-      fg: AnsiFgColor.black,
-      bg: AnsiBgColor.lightPink,
+      fg: AnsiForegroundColors.oldBlack,
+      bg: AnsiBackgroundColor.lightPink,
     );
 
     final decoratedLog = PawUtils.getDecoratedString(
       "${sourceFileInfo.isEmpty ? '' : '$sourceFileInfo | '}$timeStamp",
-      fg: AnsiFgColor.lightPink,
+      fg: AnsiForegroundColors.lightPink,
     );
 
     final decoratedObj = PawUtils.getPrettyObject(obj);
@@ -234,13 +234,13 @@ abstract class PawInterface {
 
     final decoratedLevel = PawUtils.getDecoratedString(
       "ERROR",
-      fg: AnsiFgColor.white,
-      bg: AnsiBgColor.orange,
+      fg: AnsiForegroundColors.oldWhite,
+      bg: AnsiBackgroundColor.orange,
     );
 
     final decoratedLog = PawUtils.getDecoratedString(
       "${sourceFileInfo.isEmpty ? '' : '$sourceFileInfo | '}$timeStamp | $msg",
-      fg: AnsiFgColor.orange,
+      fg: AnsiForegroundColors.orange,
     );
 
     final decoratedError = PawUtils.getPrettyError(error);

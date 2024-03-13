@@ -10,14 +10,14 @@ void main() {
       final decoratedName = PawUtils.getDecoratedName("Paw", false);
 
       expect(decoratedName, equals(''));
-      expect(decoratedName, isNot(endsWith(escapeCode)));
+      expect(decoratedName, isNot(endsWith(kAnsiEscapeCode)));
     });
 
     test('Should return an empty string if [name] is an empty string', () {
       final decoratedName = PawUtils.getDecoratedName("", true);
 
       expect(decoratedName, equals(''));
-      expect(decoratedName, isNot(endsWith(escapeCode)));
+      expect(decoratedName, isNot(endsWith(kAnsiEscapeCode)));
     });
 
     test(
@@ -30,7 +30,7 @@ void main() {
         expect(decoratedName, isA<String>());
         expect(decoratedName, contains(name));
 
-        expect(decoratedName, endsWith(escapeCode));
+        expect(decoratedName, endsWith(kAnsiEscapeCode));
       },
     );
   });
@@ -39,11 +39,11 @@ void main() {
     test('Should return a valid decorated string', () {
       final decoratedString = PawUtils.getDecoratedString(
         'test message',
-        fg: AnsiFgColor.black,
+        fg: AnsiForegroundColors.oldBlack,
       );
 
       expect(decoratedString, isA<String>());
-      expect(decoratedString, endsWith(escapeCode));
+      expect(decoratedString, endsWith(kAnsiEscapeCode));
     });
   });
 
@@ -73,7 +73,7 @@ void main() {
       final stackTrace = PawUtils.getPrettyStackTrace(null, maxLines: 5);
 
       expect(stackTrace, equals(''));
-      expect(stackTrace, isNot(endsWith(escapeCode)));
+      expect(stackTrace, isNot(endsWith(kAnsiEscapeCode)));
     });
   });
 
@@ -82,7 +82,7 @@ void main() {
       final prettyError = PawUtils.getPrettyError(null);
 
       expect(prettyError, equals(''));
-      expect(prettyError, isNot(endsWith(escapeCode)));
+      expect(prettyError, isNot(endsWith(kAnsiEscapeCode)));
     });
   });
 

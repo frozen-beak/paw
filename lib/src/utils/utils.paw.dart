@@ -25,8 +25,8 @@ class PawUtils {
 
     return getDecoratedString(
       name,
-      fg: AnsiFgColor.white,
-      bg: AnsiBgColor.blue,
+      fg: AnsiForegroundColors.oldWhite,
+      bg: AnsiBackgroundColor.blue,
     );
   }
 
@@ -47,15 +47,15 @@ class PawUtils {
   ///
   static String getDecoratedString(
     String text, {
-    required AnsiFgColor fg,
-    AnsiStyle? style,
-    AnsiBgColor? bg,
+    required AnsiForegroundColors fg,
+    AnsiTextStyles? style,
+    AnsiBackgroundColor? bg,
   }) {
     final fgCode = fg.code;
     final bgCode = bg != null ? bg.code : '';
     final styleCode = style != null ? style.code : '';
 
-    return "$bgCode$fgCode$styleCode $text $escapeCode";
+    return "$bgCode$fgCode$styleCode $text $kAnsiEscapeCode";
   }
 
   ///
@@ -178,16 +178,16 @@ class PawUtils {
 
       final coloredSt = sanitizedList
           .map(
-            (line) => "${AnsiFgColor.lightPink.code}$line",
+            (line) => "${AnsiForegroundColors.lightPink.code}$line",
           )
           .toList()
           .join('\n');
 
-      final bgColor = AnsiBgColor.lightPink.code;
-      final fgColor = AnsiFgColor.black.code;
-      final styleCode = AnsiStyle.italic.code;
+      final bgColor = AnsiBackgroundColor.lightPink.code;
+      final fgColor = AnsiForegroundColors.oldBlack.code;
+      final styleCode = AnsiTextStyles.italic.code;
 
-      final title = "$bgColor$fgColor$styleCode stacktrace $escapeCode";
+      final title = "$bgColor$fgColor$styleCode stacktrace $kAnsiEscapeCode";
 
       return '$title \n$coloredSt';
     } catch (e) {
@@ -216,12 +216,12 @@ class PawUtils {
       return '';
     }
 
-    final bgColor = AnsiBgColor.red.code;
-    final fgColor = AnsiFgColor.red.code;
-    final styleCode = AnsiStyle.italic.code;
+    final bgColor = AnsiBackgroundColor.red.code;
+    final fgColor = AnsiForegroundColors.red.code;
+    final styleCode = AnsiTextStyles.italic.code;
 
     final title =
-        "$bgColor${AnsiFgColor.black.code}$styleCode error $escapeCode";
+        "$bgColor${AnsiForegroundColors.oldBlack.code}$styleCode error $kAnsiEscapeCode";
 
     return '$title $fgColor$error\x1B[0m';
   }
