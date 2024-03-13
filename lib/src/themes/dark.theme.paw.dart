@@ -1,5 +1,5 @@
 import '../colors/ansi.paw.dart';
-import 'core/interface.theme.paw.dart';
+import 'interface.theme.paw.dart';
 
 ///
 /// A custom theme preset to customize Paw logging with a dark theme

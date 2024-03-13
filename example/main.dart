@@ -15,6 +15,13 @@ void main() {
     shouldIncludeTitle: true,
     shouldPrint: true,
     stackTraceToPrint: 5,
+    theme: DarkTheme(),
+
+    // Note: When the `level` is set to [null], Paw is allowed to print logs
+    // of all levels. To only print logs of a certain level, set the `level` to
+    // that specific level, e.g. [PawLogLevels.fetal] to only print fetal logs
+
+    level: null, // this allows paw to print all the logs,
   );
 
   ///
@@ -24,6 +31,13 @@ void main() {
   /// understanding the app's behavior.
   ///
   paw.info("This is an informational message");
+
+  ///
+  /// Log a tracing message
+  ///
+  /// Use this for tracking code flow and high-volume logs
+  ///
+  paw.trace("This is a trace log");
 
   ///
   /// Log a warning message.
@@ -50,13 +64,17 @@ void main() {
   try {
     throw UnsupportedError("Oops! You've forgotten to implement this feature");
   } catch (e, stackTrace) {
-    // Log an error with a message, error object, and stack trace
+    // Log an error with a message and error object
     paw.error(
       'An unexpected error occurred',
+      error: e,
+    );
+
+    // Log a fetal log with a message, error object, and stack trace
+    paw.fetal(
+      'A very serious error occurred',
       stackTrace: stackTrace,
-      error: UnsupportedError(
-        "Oops! You've forgotten to implement this feature",
-      ),
+      error: e,
     );
   }
 }

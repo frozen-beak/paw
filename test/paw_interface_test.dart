@@ -18,6 +18,15 @@ void main() {
       paw.clearLogOutputs();
     });
 
+    test('trace should print correctly when shouldPrintLogs is true', () {
+      paw.trace('Trace Log');
+
+      expect(paw.logOutputs.isNotEmpty, isTrue);
+      expect(paw.logOutputs.any((log) => log.contains('Trace Log')), isTrue);
+
+      paw.clearLogOutputs();
+    });
+
     test('warn should print correctly when shouldPrintLogs is true', () {
       paw.warn('Test Warn');
 
@@ -48,6 +57,19 @@ void main() {
 
       paw.clearLogOutputs();
     });
+
+    test('fetal should print correctly when shouldPrintLogs is true', () {
+      try {
+        throw Exception('Test Exception');
+      } catch (e, stackTrace) {
+        paw.fetal('Test Error', error: e, stackTrace: stackTrace);
+      }
+
+      expect(paw.logOutputs.isNotEmpty, isTrue);
+      expect(paw.logOutputs.any((log) => log.contains('Test Error')), isTrue);
+
+      paw.clearLogOutputs();
+    });
   });
 }
 
@@ -63,11 +85,18 @@ class MockLogger extends PawInterface {
     super.shouldIncludeSourceInfo = true,
     super.shouldPrintLogs = true,
     super.shouldPrintName = true,
-  });
+  }) : super(currentTheme: DarkTheme());
 
   @override
   void info(String msg, {StackTrace? stackTrace}) {
     super.info(msg, stackTrace: stackTrace);
+
+    logOutputs.add(msg);
+  }
+
+  @override
+  void trace(String msg, {StackTrace? stackTrace}) {
+    super.trace(msg, stackTrace: stackTrace);
 
     logOutputs.add(msg);
   }
@@ -89,6 +118,13 @@ class MockLogger extends PawInterface {
   @override
   void error(String msg, {Object? error, StackTrace? stackTrace}) {
     super.error(msg, error: error, stackTrace: stackTrace);
+
+    logOutputs.add(msg);
+  }
+
+  @override
+  void fetal(String msg, {Object? error, StackTrace? stackTrace}) {
+    super.fetal(msg, error: error, stackTrace: stackTrace);
 
     logOutputs.add(msg);
   }

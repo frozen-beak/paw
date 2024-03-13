@@ -1,4 +1,4 @@
-import '../../colors/ansi.paw.dart';
+import '../colors/ansi.paw.dart';
 
 ///
 /// `PawTheme` - An abstract class to help create custom themes to
