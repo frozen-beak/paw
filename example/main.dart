@@ -15,6 +15,13 @@ void main() {
     shouldIncludeTitle: true,
     shouldPrint: true,
     stackTraceToPrint: 5,
+    theme: DarkTheme(),
+
+    // Note: When the `level` is set to [null], Paw is allowed to print logs
+    // of all levels. To only print logs of a certain level, set the `level` to
+    // that specific level, e.g. [PawLogLevels.fetal] to only print fetal logs
+
+    level: null, // this allows paw to print all the logs,
   );
 
   ///
@@ -65,7 +72,7 @@ void main() {
 
     // Log a fetal log with a message, error object, and stack trace
     paw.fetal(
-      'An unexpected error occurred',
+      'A very serious error occurred',
       stackTrace: stackTrace,
       error: e,
     );
