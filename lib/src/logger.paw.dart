@@ -1,4 +1,6 @@
 import '../paw.dart';
+import 'themes/core/interface.theme.paw.dart';
+import 'utils/log_levels.utils.paw.dart';
 
 ///
 /// `Paw` - A Concrete Implementation of `PawInterface` for Enhanced Logging.
@@ -56,6 +58,18 @@ class Paw extends PawInterface {
   final bool shouldIncludeSourceFileInfo;
 
   ///
+  /// Set custom log levels to filter printing the logs
+  ///
+  final PawLogLevels? level;
+
+  ///
+  /// Color theme for styling Paw
+  ///
+  /// Default to `DarkTheme`
+  ///
+  final PawTheme? theme;
+
+  ///
   /// Constructs a `Paw` logger with configurable options.
   ///
   /// Parameters:
@@ -71,11 +85,15 @@ class Paw extends PawInterface {
     this.shouldIncludeTitle = true,
     this.shouldPrint = true,
     this.shouldIncludeSourceFileInfo = true,
+    this.theme,
+    this.level,
   }) : super(
           name: title,
           shouldPrintLogs: shouldPrint,
           maxStackTraces: stackTraceToPrint,
           shouldIncludeSourceInfo: shouldIncludeSourceFileInfo,
           shouldPrintName: shouldIncludeTitle,
+          logLevel: level,
+          currentTheme: DarkTheme(),
         );
 }

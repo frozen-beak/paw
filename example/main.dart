@@ -26,6 +26,13 @@ void main() {
   paw.info("This is an informational message");
 
   ///
+  /// Log a tracing message
+  ///
+  /// Use this for tracking code flow and high-volume logs
+  ///
+  paw.trace("This is a trace log");
+
+  ///
   /// Log a warning message.
   /// Warnings are useful for non-critical issues that should be
   /// brought to attention.
@@ -50,13 +57,17 @@ void main() {
   try {
     throw UnsupportedError("Oops! You've forgotten to implement this feature");
   } catch (e, stackTrace) {
-    // Log an error with a message, error object, and stack trace
+    // Log an error with a message and error object
     paw.error(
       'An unexpected error occurred',
+      error: e,
+    );
+
+    // Log a fetal log with a message, error object, and stack trace
+    paw.fetal(
+      'An unexpected error occurred',
       stackTrace: stackTrace,
-      error: UnsupportedError(
-        "Oops! You've forgotten to implement this feature",
-      ),
+      error: e,
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import '../colors/ansi.paw.dart';
+import '../themes/core/interface.theme.paw.dart';
+import 'log_levels.utils.paw.dart';
 
 ///
 /// A utility class for [PawPrint]
@@ -10,52 +12,92 @@ import '../colors/ansi.paw.dart';
 ///
 class PawUtils {
   ///
-  /// Get a decorated `name` based on specified conditions.
+  /// Required title length to fit all the log titles in the same string length
   ///
-  /// If the `name` is empty string or `shouldPrintName` is `false`, an empty string is returned.
+  /// This brings uniformity in logs across various levels and improve the
+  /// readability of the logs.
   ///
-  /// Example:
-  /// ```
-  /// String decoratedName = PawUtils.getDecoratedName("PAW", true);
-  ///
-  /// print(decoratedName); // Outputs: Name styled with ANSI escape codes
-  /// ```
-  static String getDecoratedName(String name, bool shouldPrintName) {
-    if (!shouldPrintName || name.isEmpty) return '';
+  static const kRequiredTitleLength = 5;
 
-    return getDecoratedString(
-      name,
-      fg: AnsiForegroundColors.oldWhite,
-      bg: AnsiBackgroundColor.blue,
-    );
+  ///
+  /// Get decorated log heading for the log
+  ///
+  /// ### Example:
+  /// ```
+  /// final String decoratedHeading = PawUtils.getDecoratedLogHeading(
+  ///   PawLogLevels.info,
+  ///   shouldPrintName: true,
+  ///   name: "Paw",
+  ///   bgColor: currentTheme.bgInfo,
+  ///   currentTheme: DarkTheme(),
+  /// );
+  /// ```
+  ///
+  static String getDecoratedLogHeading(
+    PawLogLevels logLevel, {
+    required bool shouldPrintName,
+    required String name,
+    required AnsiBackgroundColor bgColor,
+    required PawTheme currentTheme,
+  }) {
+    final String loggingName = shouldPrintName ? name : "";
+
+    final String logTitle = PawUtils._getCorrectSizedTitle(logLevel);
+
+    return "${bgColor.code}${currentTheme.heading.code} $loggingName › $logTitle $kAnsiEscapeCode";
   }
 
   ///
-  /// Decorates a given text with foreground [fg] color and optional background [bg] color and style.
+  /// Get decorated info card with timeStamp and source info
   ///
-  /// Example:
-  /// ```dart
-  /// String decoratedText = PawUtils.getDecoratedString(
-  ///   "Hello, World!",
-  ///   fg: AnsiFgColor.green,
-  ///   bg: AnsiBgColor.yellow,
-  ///   style: AnsiStyle.bold,
+  /// ### Example:
+  /// ```
+  /// final String decoratedInfoCard = PawUtils.getDecoratedLogHeading(
+  ///   shouldIncludeSourceFileInfo: true,
+  ///   stackTrace: stackTrace
+  ///   currentTheme: DarkTheme(),
   /// );
+  /// ```
   ///
-  /// print(decoratedText); // Outputs: String styled with ANSI escape codes
+  static String getDecoratedInfoCard({
+    required bool shouldIncludeSourceFileInfo,
+    required PawTheme currentTheme,
+    StackTrace? stackTrace,
+  }) {
+    final currentTimeStamp = getCurrentTimeStamp();
+
+    if (!shouldIncludeSourceFileInfo) {
+      return "${currentTheme.infoCardBg.code}${currentTheme.heading.code} $currentTimeStamp $kAnsiEscapeCode";
+    }
+
+    final String sourceInfo =
+        shouldIncludeSourceFileInfo ? getSourceFileInfo(stackTrace) : "";
+
+    return "${currentTheme.infoCardBg.code}${currentTheme.heading.code} $currentTimeStamp › $sourceInfo $kAnsiEscapeCode";
+  }
+
+  ///
+  /// Get a decorated string with a foreground color and optional text style
+  ///
+  /// ### Example"
+  /// ```
   /// ```
   ///
   static String getDecoratedString(
-    String text, {
-    required AnsiForegroundColors fg,
-    AnsiTextStyles? style,
-    AnsiBackgroundColor? bg,
+    String message, {
+    required AnsiForegroundColors fgColor,
+    AnsiTextStyles? textStyle,
   }) {
-    final fgCode = fg.code;
-    final bgCode = bg != null ? bg.code : '';
-    final styleCode = style != null ? style.code : '';
+    return "${fgColor.code}${textStyle != null ? textStyle.code : ""}$message$kAnsiEscapeCode";
+  }
 
-    return "$bgCode$fgCode$styleCode $text $kAnsiEscapeCode";
+  ///
+  /// Adds padding to the log title to fit in with `kRequiredTitleLength`
+  ///
+  static String _getCorrectSizedTitle(PawLogLevels logLevel) {
+    final int diff = kRequiredTitleLength - logLevel.title.length;
+
+    return logLevel.title + (" " * diff);
   }
 
   ///
@@ -163,6 +205,7 @@ class PawUtils {
   static String getPrettyStackTrace(
     StackTrace? stackTrace, {
     required int maxLines,
+    required PawTheme currentTheme,
   }) {
     try {
       if (stackTrace == null) {
@@ -178,20 +221,15 @@ class PawUtils {
 
       final coloredSt = sanitizedList
           .map(
-            (line) => "${AnsiForegroundColors.lightPink.code}$line",
+            (line) => "${currentTheme.object.code}$line",
           )
           .toList()
           .join('\n');
 
-      final bgColor = AnsiBackgroundColor.lightPink.code;
-      final fgColor = AnsiForegroundColors.oldBlack.code;
-      final styleCode = AnsiTextStyles.italic.code;
-
-      final title = "$bgColor$fgColor$styleCode stacktrace $kAnsiEscapeCode";
-
-      return '$title \n$coloredSt';
+      return coloredSt;
     } catch (e) {
-      return "$stackTrace [stacktrace error -> $e]";
+      // Return an error message if any exception occurs during conversion.
+      return 'Unable to prettify stacktrace \n${getPrettyError(e, currentTheme: currentTheme)}';
     }
   }
 
@@ -211,19 +249,13 @@ class PawUtils {
   /// print(prettyError); // Outputs: "\x1B[41m\x1B[31;3m error \x1B[0m \x1B[31mInvalid input\x1B[0m"
   /// ```
   ///
-  static String getPrettyError(Object? error) {
+  static String getPrettyError(Object? error,
+      {required PawTheme currentTheme}) {
     if (error == null) {
       return '';
     }
 
-    final bgColor = AnsiBackgroundColor.red.code;
-    final fgColor = AnsiForegroundColors.red.code;
-    final styleCode = AnsiTextStyles.italic.code;
-
-    final title =
-        "$bgColor${AnsiForegroundColors.oldBlack.code}$styleCode error $kAnsiEscapeCode";
-
-    return '$title $fgColor$error\x1B[0m';
+    return '${currentTheme.errorObject.code}$error$kAnsiEscapeCode';
   }
 
   ///
@@ -247,7 +279,10 @@ class PawUtils {
   /// print(prettyObject);
   /// ```
   ///
-  static String getPrettyObject(Object? obj) {
+  static String getPrettyObject(
+    Object? obj, {
+    required PawTheme currentTheme,
+  }) {
     if (obj == null) return "";
 
     try {
@@ -262,14 +297,14 @@ class PawUtils {
       // Add color to each line for better visibility.
       List<String> lines = prettyPrintedJson.split('\n');
 
-      lines = lines.map((line) => '\x1b[38;5;15m$line').toList();
+      lines = lines.map((line) => '${currentTheme.object.code}$line').toList();
 
       // Join the lines and return the final prettified output.
       String finalOutput = lines.join('\n');
       return finalOutput;
     } catch (e) {
       // Return an error message if any exception occurs during conversion.
-      return 'Unable to convert the object. \n${getPrettyError(e)}';
+      return 'Unable to convert the object. \n${getPrettyError(e, currentTheme: currentTheme)}';
     }
   }
 

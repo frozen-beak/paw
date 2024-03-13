@@ -1,4 +1,6 @@
 import 'colors/ansi.paw.dart';
+import 'themes/core/interface.theme.paw.dart';
+import 'utils/log_levels.utils.paw.dart';
 import 'utils/utils.paw.dart';
 
 ///
@@ -34,10 +36,12 @@ abstract class PawInterface {
   ///
   PawInterface({
     required this.name,
+    required this.currentTheme,
     this.shouldPrintLogs = true,
     this.shouldPrintName = true,
     this.maxStackTraces = 5,
     this.shouldIncludeSourceInfo = true,
+    this.logLevel,
   });
 
   ///
@@ -66,6 +70,17 @@ abstract class PawInterface {
   final bool shouldIncludeSourceInfo;
 
   ///
+  /// Color theme for styling Paw
+  ///
+  final PawTheme currentTheme;
+
+  ///
+  /// Set a specific log level to only print the logs for specific level and
+  /// hide other levels
+  ///
+  final PawLogLevels? logLevel;
+
+  ///
   /// Logs an informational message to the debug console.
   ///
   /// This method is used to log informational messages to the debug console
@@ -79,76 +94,80 @@ abstract class PawInterface {
   /// ```
   ///
   void info(
-    String msg, {
+    String message, {
     StackTrace? stackTrace,
   }) {
     // Do nothing if current environment is not debug
     if (!shouldPrintLogs) return;
 
-    final timeStamp = PawUtils.getCurrentTimeStamp();
+    // Do nothing if logLevel is set to a specific log level
+    if (logLevel != null && logLevel != PawLogLevels.info) return;
 
-    final sourceFileInfo = PawUtils.getSourceFileInfo(
-      stackTrace,
-      shouldIncludeSourceInfo,
+    final String decoratedHeading = PawUtils.getDecoratedLogHeading(
+      PawLogLevels.info,
+      shouldPrintName: shouldPrintName,
+      name: name,
+      bgColor: currentTheme.bgInfo,
+      currentTheme: currentTheme,
     );
 
-    final title = PawUtils.getDecoratedName(name, shouldPrintName);
-
-    final decoratedLevel = PawUtils.getDecoratedString(
-      "INFO",
-      fg: AnsiForegroundColors.oldBlack,
-      bg: AnsiBackgroundColor.yellow,
+    final decoratedInfoCard = PawUtils.getDecoratedInfoCard(
+      shouldIncludeSourceFileInfo: shouldIncludeSourceInfo,
+      currentTheme: currentTheme,
+      stackTrace: stackTrace,
     );
 
-    final decoratedLog = PawUtils.getDecoratedString(
-      "${sourceFileInfo.isEmpty ? '' : '$sourceFileInfo | '}$timeStamp | $msg",
-      fg: AnsiForegroundColors.yellow,
+    final decoratedMessage = PawUtils.getDecoratedString(
+      message,
+      fgColor: currentTheme.message,
     );
 
-    PawUtils.log("$title$decoratedLevel $decoratedLog");
+    PawUtils.log("$decoratedHeading$decoratedInfoCard $decoratedMessage");
   }
 
   ///
-  /// Logs a warning message to the debug console.
+  /// Log detailed tracing information. Ideal for high-volume logs.
   ///
-  /// This method is used to log warning messages to the debug console
-  /// with formatted decorations and additional information such as source file,
-  /// timestamp, and the provided warning message.
+  /// This method is used to log tracing info to the debug console with
+  /// formatted decorations and additional information such as source file,
+  /// timestamp, and the provided message.
   ///
   /// Example:
   /// ```
-  /// // Log a warning message
-  /// Paw().warn('This is a warning message');
+  /// // Log tracing info
+  /// Paw().trace('Paw is up and running!');
   /// ```
   ///
-  void warn(
-    String msg, {
+  void trace(
+    String message, {
     StackTrace? stackTrace,
   }) {
     // Do nothing if current environment is not debug
     if (!shouldPrintLogs) return;
 
-    final timeStamp = PawUtils.getCurrentTimeStamp();
+    // Do nothing if logLevel is set to a specific log level
+    if (logLevel != null && logLevel != PawLogLevels.trace) return;
 
-    final sourceFileInfo = PawUtils.getSourceFileInfo(
-      stackTrace,
-      shouldIncludeSourceInfo,
+    final String decoratedHeading = PawUtils.getDecoratedLogHeading(
+      PawLogLevels.trace,
+      shouldPrintName: shouldPrintName,
+      name: name,
+      bgColor: currentTheme.bgTrace,
+      currentTheme: currentTheme,
     );
 
-    final title = PawUtils.getDecoratedName(name, shouldPrintName);
-
-    final decoratedLevel = PawUtils.getDecoratedString(
-      "WARN",
-      fg: AnsiForegroundColors.lightPink,
-      bg: AnsiBackgroundColor.pink,
+    final decoratedInfoCard = PawUtils.getDecoratedInfoCard(
+      shouldIncludeSourceFileInfo: shouldIncludeSourceInfo,
+      currentTheme: currentTheme,
+      stackTrace: stackTrace,
     );
 
-    final decoratedLog = PawUtils.getDecoratedString(
-      "${sourceFileInfo.isEmpty ? '' : '$sourceFileInfo | '}$timeStamp | $msg",
-      fg: AnsiForegroundColors.pink,
+    final decoratedMessage = PawUtils.getDecoratedString(
+      message,
+      fgColor: currentTheme.message,
     );
 
-    PawUtils.log("$title$decoratedLevel $decoratedLog");
+    PawUtils.log("$decoratedHeading$decoratedInfoCard $decoratedMessage");
   }
 
   ///
@@ -171,30 +190,75 @@ abstract class PawInterface {
     // Do nothing if current environment is not debug
     if (!shouldPrintLogs) return;
 
-    final timeStamp = PawUtils.getCurrentTimeStamp();
+    // Do nothing if logLevel is set to a specific log level
+    if (logLevel != null && logLevel != PawLogLevels.debug) return;
 
-    final sourceFileInfo = PawUtils.getSourceFileInfo(
-      stackTrace,
-      shouldIncludeSourceInfo,
+    final String decoratedHeading = PawUtils.getDecoratedLogHeading(
+      PawLogLevels.debug,
+      shouldPrintName: shouldPrintName,
+      name: name,
+      bgColor: currentTheme.bgDebug,
+      currentTheme: currentTheme,
     );
 
-    final title = PawUtils.getDecoratedName(name, shouldPrintName);
-
-    final decoratedLevel = PawUtils.getDecoratedString(
-      "DEBUG",
-      fg: AnsiForegroundColors.oldBlack,
-      bg: AnsiBackgroundColor.lightPink,
+    final decoratedInfoCard = PawUtils.getDecoratedInfoCard(
+      shouldIncludeSourceFileInfo: shouldIncludeSourceInfo,
+      currentTheme: currentTheme,
+      stackTrace: stackTrace,
     );
 
-    final decoratedLog = PawUtils.getDecoratedString(
-      "${sourceFileInfo.isEmpty ? '' : '$sourceFileInfo | '}$timeStamp",
-      fg: AnsiForegroundColors.lightPink,
+    final decoratedObject = PawUtils.getPrettyObject(
+      obj,
+      currentTheme: currentTheme,
     );
 
-    final decoratedObj = PawUtils.getPrettyObject(obj);
+    PawUtils.log("$decoratedHeading$decoratedInfoCard \n$decoratedObject");
+  }
 
-    PawUtils.log("$title$decoratedLevel $decoratedLog");
-    PawUtils.log(decoratedObj);
+  ///
+  /// Logs a warning message to the debug console.
+  ///
+  /// This method is used to log warning messages to the debug console
+  /// with formatted decorations and additional information such as source file,
+  /// timestamp, and the provided warning message.
+  ///
+  /// Example:
+  /// ```
+  /// // Log a warning message
+  /// Paw().warn('This is a warning message');
+  /// ```
+  ///
+  void warn(
+    String message, {
+    StackTrace? stackTrace,
+  }) {
+    // Do nothing if current environment is not debug
+    if (!shouldPrintLogs) return;
+
+    // Do nothing if logLevel is set to a specific log level
+    if (logLevel != null && logLevel != PawLogLevels.warn) return;
+
+    final String decoratedHeading = PawUtils.getDecoratedLogHeading(
+      PawLogLevels.warn,
+      shouldPrintName: shouldPrintName,
+      name: name,
+      bgColor: currentTheme.bgWarn,
+      currentTheme: currentTheme,
+    );
+
+    final decoratedInfoCard = PawUtils.getDecoratedInfoCard(
+      shouldIncludeSourceFileInfo: shouldIncludeSourceInfo,
+      currentTheme: currentTheme,
+      stackTrace: stackTrace,
+    );
+
+    final decoratedMessage = PawUtils.getDecoratedString(
+      message,
+      fgColor: currentTheme.errorMessage,
+      textStyle: AnsiTextStyles.italic,
+    );
+
+    PawUtils.log("$decoratedHeading$decoratedInfoCard $decoratedMessage");
   }
 
   ///
@@ -216,48 +280,124 @@ abstract class PawInterface {
   /// ```
   ///
   void error(
-    String msg, {
+    String message, {
     Object? error,
     StackTrace? stackTrace,
   }) {
     // Do nothing if current environment is not debug
     if (!shouldPrintLogs) return;
 
-    final timeStamp = PawUtils.getCurrentTimeStamp();
+    // Do nothing if logLevel is set to a specific log level
+    if (logLevel != null && logLevel != PawLogLevels.error) return;
 
-    final sourceFileInfo = PawUtils.getSourceFileInfo(
-      stackTrace,
-      shouldIncludeSourceInfo,
+    final String decoratedHeading = PawUtils.getDecoratedLogHeading(
+      PawLogLevels.error,
+      shouldPrintName: shouldPrintName,
+      name: name,
+      bgColor: currentTheme.bgError,
+      currentTheme: currentTheme,
     );
 
-    final title = PawUtils.getDecoratedName(name, shouldPrintName);
-
-    final decoratedLevel = PawUtils.getDecoratedString(
-      "ERROR",
-      fg: AnsiForegroundColors.oldWhite,
-      bg: AnsiBackgroundColor.orange,
+    final decoratedInfoCard = PawUtils.getDecoratedInfoCard(
+      shouldIncludeSourceFileInfo: shouldIncludeSourceInfo,
+      currentTheme: currentTheme,
+      stackTrace: stackTrace,
     );
 
-    final decoratedLog = PawUtils.getDecoratedString(
-      "${sourceFileInfo.isEmpty ? '' : '$sourceFileInfo | '}$timeStamp | $msg",
-      fg: AnsiForegroundColors.orange,
+    final decoratedMessage = PawUtils.getDecoratedString(
+      message,
+      fgColor: currentTheme.errorMessage,
     );
 
-    final decoratedError = PawUtils.getPrettyError(error);
+    final decoratedError = PawUtils.getPrettyError(
+      error,
+      currentTheme: currentTheme,
+    );
 
-    final decoratedSt = PawUtils.getPrettyStackTrace(
+    final prettyStacktrace = PawUtils.getPrettyStackTrace(
       stackTrace,
       maxLines: maxStackTraces,
+      currentTheme: currentTheme,
     );
 
-    PawUtils.log("$title$decoratedLevel $decoratedLog");
+    final decoratedDivider = PawUtils.getDecoratedString(
+      "----------",
+      fgColor: currentTheme.errorMessage,
+    );
 
-    if (decoratedError.isNotEmpty) {
-      PawUtils.log(decoratedError);
-    }
+    PawUtils.log("$decoratedHeading$decoratedInfoCard $decoratedMessage");
+    PawUtils.log(
+      "$decoratedDivider\n$decoratedError\n${prettyStacktrace.isNotEmpty ? "\n$prettyStacktrace\n" : ""}$decoratedDivider",
+    );
+  }
 
-    if (decoratedSt.isNotEmpty) {
-      PawUtils.log(decoratedSt);
-    }
+  ///
+  /// Logs an error message with details, including the error and stack trace.
+  ///
+  /// This method is used to log error messages with formatted decorations,
+  /// source file information, timestamp, the provided error message, and the
+  /// associated stack trace. It provides a comprehensive view of errors during
+  /// debugging.
+  ///
+  /// Example:
+  /// ```
+  /// try {
+  ///   throw UnsupportedError("Oops! You've forgotten to implement this feature");
+  /// } catch (e, stackTrace) {
+  ///   // Log an error with a message, error object, and stack trace
+  ///   Paw().error('An unexpected error occurred', error: e, stackTrace: stackTrace);
+  /// }
+  /// ```
+  ///
+  void fetal(
+    String message, {
+    Object? error,
+    StackTrace? stackTrace,
+  }) {
+    // Do nothing if current environment is not debug
+    if (!shouldPrintLogs) return;
+
+    // Do nothing if logLevel is set to a specific log level
+    if (logLevel != null && logLevel != PawLogLevels.fetal) return;
+
+    final String decoratedHeading = PawUtils.getDecoratedLogHeading(
+      PawLogLevels.fetal,
+      shouldPrintName: shouldPrintName,
+      name: name,
+      bgColor: currentTheme.bgFetal,
+      currentTheme: currentTheme,
+    );
+
+    final decoratedInfoCard = PawUtils.getDecoratedInfoCard(
+      shouldIncludeSourceFileInfo: shouldIncludeSourceInfo,
+      currentTheme: currentTheme,
+      stackTrace: stackTrace,
+    );
+
+    final decoratedMessage = PawUtils.getDecoratedString(
+      message,
+      fgColor: currentTheme.errorMessage,
+    );
+
+    final decoratedError = PawUtils.getPrettyError(
+      error,
+      currentTheme: currentTheme,
+    );
+
+    final prettyStacktrace = PawUtils.getPrettyStackTrace(
+      stackTrace,
+      maxLines: maxStackTraces,
+      currentTheme: currentTheme,
+    );
+
+    final decoratedDivider = PawUtils.getDecoratedString(
+      "----------",
+      fgColor: currentTheme.errorMessage,
+    );
+
+    PawUtils.log("$decoratedHeading$decoratedInfoCard $decoratedMessage");
+    PawUtils.log(
+      "$decoratedDivider\n$decoratedError\n${prettyStacktrace.isNotEmpty ? "\n$prettyStacktrace\n" : ""}$decoratedDivider",
+    );
   }
 }
