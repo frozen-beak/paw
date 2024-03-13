@@ -42,19 +42,7 @@ void main() {
     });
   });
 
-  group('getPrettyError', () {
-    test('Returns empty string for null error', () {
-      final prettyError = PawUtils.getPrettyError(
-        null,
-        currentTheme: currentTheme,
-      );
-
-      expect(prettyError, equals(''));
-      expect(prettyError, isNot(endsWith(kAnsiEscapeCode)));
-    });
-  });
-
-  group('getPrettyObject tests', () {
+  group('getPrettyObject', () {
     test('Prettifies a simple object correctly', () {
       var simpleObject = {'name': 'John', 'age': 25, 'city': 'New York'};
       var expectedOutput = jsonEncode(simpleObject);
@@ -84,5 +72,54 @@ void main() {
           ),
           equals(''));
     });
+  });
+
+  group('getPrettyError', () {
+    test('Returns empty string for null error', () {
+      final prettyError = PawUtils.getPrettyError(
+        null,
+        currentTheme: currentTheme,
+      );
+
+      expect(prettyError, equals(''));
+      expect(prettyError, isNot(endsWith(kAnsiEscapeCode)));
+    });
+  });
+
+  group('getCorrectSizedTitle', () {
+    test(
+      'getCorrectSizedTitle returns correctly sized title',
+      () {
+        expect(
+          PawUtils.getCorrectSizedTitle(PawLogLevels.info).length,
+          PawUtils.kRequiredTitleLength,
+        );
+
+        expect(
+          PawUtils.getCorrectSizedTitle(PawLogLevels.trace).length,
+          PawUtils.kRequiredTitleLength,
+        );
+
+        expect(
+          PawUtils.getCorrectSizedTitle(PawLogLevels.debug).length,
+          PawUtils.kRequiredTitleLength,
+        );
+
+        expect(
+          PawUtils.getCorrectSizedTitle(PawLogLevels.warn).length,
+          PawUtils.kRequiredTitleLength,
+        );
+
+        expect(
+          PawUtils.getCorrectSizedTitle(PawLogLevels.error).length,
+          PawUtils.kRequiredTitleLength,
+        );
+
+        expect(
+          PawUtils.getCorrectSizedTitle(PawLogLevels.fetal).length,
+          PawUtils.kRequiredTitleLength,
+        );
+      },
+    );
   });
 }
