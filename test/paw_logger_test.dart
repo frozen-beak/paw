@@ -2,7 +2,7 @@ import 'package:test/test.dart';
 import 'package:paw/paw.dart';
 
 void main() {
-  group('Paw Class Tests', () {
+  group('Paw Logger', () {
     late Paw paw;
 
     // Test default behavior
@@ -20,14 +20,14 @@ void main() {
     // Test custom settings
     test('Custom settings are applied correctly', () {
       paw = Paw(
-        title: "CustomLogger",
+        title: "Paw",
         stackTraceToPrint: 3,
         shouldIncludeTitle: false,
         shouldPrint: false,
         shouldIncludeSourceFileInfo: false,
       );
 
-      expect(paw.title, equals("CustomLogger"));
+      expect(paw.title, equals("Paw"));
       expect(paw.stackTraceToPrint, equals(3));
       expect(paw.shouldIncludeTitle, isFalse);
       expect(paw.shouldPrint, isFalse);
