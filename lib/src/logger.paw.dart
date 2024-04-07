@@ -1,4 +1,6 @@
-import '../paw.dart';
+import 'interface.paw.dart';
+import 'themes/themes.paw.dart';
+import 'utils/utils.paw.dart';
 
 ///
 /// `Paw` - A Concrete Implementation of `PawInterface` for Enhanced Logging.
@@ -111,6 +113,6 @@ class Paw extends PawInterface {
           shouldIncludeSourceInfo: shouldIncludeSourceFileInfo,
           shouldPrintName: shouldIncludeTitle,
           logLevel: level,
-          currentTheme: PawDarkTheme(),
+          currentTheme: theme ?? PawDarkTheme(),
         );
 }

@@ -38,7 +38,7 @@ class AnsiForegroundColors {
   /// components of the color, respectively. Each component should be an integer
   /// between 0 and 255, inclusive.
   ///
-  /// 👉 Note: These function contains assert statements to validate RGB values,
+  /// `👉 Note:` These function contains assert statements to validate RGB values,
   /// ensuring they are between 0 and 255. They are effective in the development
   /// environment only and won't impact production code.
   ///
@@ -77,42 +77,42 @@ class AnsiForegroundColors {
   }
 
   ///
-  /// Black foreground color representing `rgb(0,0,0)`
+  /// Black foreground color representing `rgb(0, 0, 0)`
   ///
   static const AnsiForegroundColors black = AnsiForegroundColors(
     "\x1b[38;5;0m",
   );
 
   ///
-  /// NavyBlue foreground color representing `rgb(??)`
+  /// NavyBlue foreground color representing `rgb(0, 0, 128)`
   ///
   static const AnsiForegroundColors navyBlue = AnsiForegroundColors(
     "\x1b[38;5;18m",
   );
 
   ///
-  /// Gray foreground color representing `rgb(??)`
+  /// Gray foreground color representing `rgb(0, 0, 95)`
   ///
   static const AnsiForegroundColors gray = AnsiForegroundColors(
     "\x1b[38;5;8m",
   );
 
   ///
-  /// White foreground color representing `rgb(255,255,255)`
+  /// White foreground color representing `rgb(255, 255, 255)`
   ///
   static const AnsiForegroundColors white = AnsiForegroundColors(
     "\x1b[38;5;255m",
   );
 
   ///
-  /// Soft Pink foreground color representing `rgb(255, 95, 135)`
+  /// SoftPink foreground color representing `rgb(255, 95, 135)`
   ///
   static const AnsiForegroundColors softPink = AnsiForegroundColors(
     "\x1b[38;5;195m",
   );
 
   ///
-  /// Light Purple foreground color representing `rgb(155, 89, 182)`
+  /// LightPurple foreground color representing `rgb(155, 89, 182)`
   ///
   static const AnsiForegroundColors lightPurple = AnsiForegroundColors(
     "\x1b[38;5;189m",
@@ -151,7 +151,7 @@ class AnsiBackgroundColor {
   ///
   /// The ANSI escape code for the background color.
   ///
-  /// Example:
+  /// ### Example:
   /// ```
   /// // Using AnsiBgColor to set the background color to blue
   /// debugPrint("${AnsiBgColor.blue.code} This has a blue background ${kAnsiEscapeCode}");
@@ -174,7 +174,7 @@ class AnsiBackgroundColor {
   /// components of the color, respectively. Each component should be an integer
   /// between 0 and 255, inclusive.
   ///
-  /// 👉 Note: These function contains assert statements to validate RGB values,
+  /// `👉 Note:` These function contains assert statements to validate RGB values,
   /// ensuring they are between 0 and 255. They are effective in the development
   /// environment only and won't impact production code.
   ///
@@ -234,21 +234,21 @@ class AnsiBackgroundColor {
   );
 
   ///
-  /// Light Gray background color representing `rgb(192, 192, 192)`
+  /// LightGray background color representing `rgb(192, 192, 192)`
   ///
   static const AnsiBackgroundColor lightGray = AnsiBackgroundColor(
     "\x1b[48;5;240m",
   );
 
   ///
-  /// Dark Pink background color representing `rgb(255, 61, 111)`
+  /// DarkPink background color representing `rgb(255, 61, 111)`
   ///
   static const AnsiBackgroundColor darkPink = AnsiBackgroundColor(
     "\x1b[48;5;203m",
   );
 
   ///
-  /// Brown background color representing `rgb(??)`
+  /// Brown background color representing `rgb(215, 0, 143)`
   ///
   static const AnsiBackgroundColor brown = AnsiBackgroundColor(
     "\x1b[48;5;124m",
@@ -262,7 +262,7 @@ class AnsiBackgroundColor {
   );
 
   ///
-  /// Gray background color representing `rgb(??)`
+  /// Gray background color representing `rgb(102, 102, 102)`
   ///
   static const AnsiBackgroundColor gray = AnsiBackgroundColor(
     "\x1b[48;5;245m",
