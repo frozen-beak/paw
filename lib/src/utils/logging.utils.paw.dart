@@ -221,6 +221,15 @@ class LoggingUtils {
   }
 
   ///
+  /// Adds padding to the log title to fit in with `kRequiredTitleLength`
+  ///
+  static String getCorrectSizedTitle(PawLogLevels logLevel) {
+    final int diff = kRequiredTitleLength - logLevel.title.length;
+
+    return logLevel.title + (" " * diff);
+  }
+
+  ///
   /// Prints the log message to the console when the application if
   /// [shouldPrintLog] is set to `true`
   ///
@@ -228,18 +237,14 @@ class LoggingUtils {
   /// This ensures that log messages are displayed only when user want them to
   /// be displayed
   ///
-  static void log(String log, {bool shouldPrintLog = true}) {
+  /// Returns the log message if it is printed, otherwise returns `null`.
+  ///
+  static String? log(String log, {bool shouldPrintLog = true}) {
     if (shouldPrintLog) {
       print(log);
+      return log;
     }
-  }
 
-  ///
-  /// Adds padding to the log title to fit in with `kRequiredTitleLength`
-  ///
-  static String getCorrectSizedTitle(PawLogLevels logLevel) {
-    final int diff = kRequiredTitleLength - logLevel.title.length;
-
-    return logLevel.title + (" " * diff);
+    return null;
   }
 }
