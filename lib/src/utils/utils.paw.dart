@@ -20,7 +20,7 @@ class PawUtils {
   static const kRequiredTitleLength = 5;
 
   ///
-  /// Get decorated log heading for the log
+  /// Get decorated log heading for the log with a bold text
   ///
   static String getDecoratedLogHeading(
     PawLogLevels logLevel, {
@@ -29,11 +29,13 @@ class PawUtils {
     required AnsiBackgroundColor bgColor,
     required PawTheme currentTheme,
   }) {
-    final String loggingName = shouldPrintName ? name : "";
-
     final String logTitle = PawUtils.getCorrectSizedTitle(logLevel);
 
-    return "${bgColor.code}${currentTheme.heading.code} $loggingName › $logTitle $kAnsiEscapeCode";
+    if (shouldPrintName) {
+      return "${bgColor.code}${AnsiTextStyles.bold.code}${currentTheme.heading.code} $name › $logTitle $kAnsiEscapeCode";
+    }
+
+    return "${bgColor.code}${AnsiTextStyles.bold.code}${currentTheme.heading.code} $logTitle $kAnsiEscapeCode";
   }
 
   ///
