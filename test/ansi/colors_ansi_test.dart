@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 void main() {
   group("AnsiForegroundColors", () {
     test(
-      '`Custom` function in [AnsiForegroundColors] creates color with valid RGB values',
+      'AnsiForegroundColors.custom function creates color with valid RGB values',
       () {
         // Arrange
         final r = 123;
@@ -18,7 +18,7 @@ void main() {
     );
 
     test(
-        '`Custom` function in [AnsiForegroundColors] throws AssertionError for invalid RGB values',
+        'AnsiForegroundColors.custom function throws AssertionError for invalid RGB values',
         () {
       // Invalid Red (r) component value
       final r = 256;
@@ -51,7 +51,7 @@ void main() {
 
   group("AnsiBackgroundColor", () {
     test(
-      '`Custom` function in [AnsiBackgroundColor] creates color with valid RGB values',
+      'AnsiBackgroundColor.custom function creates color with valid RGB values',
       () {
         // Arrange
         final r = 123;
@@ -67,7 +67,7 @@ void main() {
     );
 
     test(
-        '`Custom` function in [AnsiBackgroundColor] throws AssertionError for invalid RGB values',
+        'AnsiBackgroundColor.custom function creates throws AssertionError for invalid RGB values',
         () {
       // Invalid Red (r) component value
       final r = 256;
