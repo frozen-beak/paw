@@ -15,7 +15,7 @@ void main() {
     shouldIncludeTitle: true,
     shouldPrint: true,
     stackTraceToPrint: 5,
-    theme: DarkTheme(),
+    theme: PawDarkTheme(),
 
     // Note: When the `level` is set to [null], Paw is allowed to print logs
     // of all levels. To only print logs of a certain level, set the `level` to

@@ -6,8 +6,8 @@ class MyLogger extends PawInterface {
     super.maxStackTraces = 5,
     super.shouldIncludeSourceInfo = false,
     super.shouldPrintLogs = true,
-    super.shouldPrintName = true,
-  }) : super(currentTheme: DarkTheme());
+    super.shouldPrintName = false,
+  }) : super(currentTheme: PawDarkTheme());
 
   @override
   void info(String msg, {StackTrace? stackTrace}) {

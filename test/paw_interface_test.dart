@@ -85,7 +85,7 @@ class MockLogger extends PawInterface {
     super.shouldIncludeSourceInfo = true,
     super.shouldPrintLogs = true,
     super.shouldPrintName = true,
-  }) : super(currentTheme: DarkTheme());
+  }) : super(currentTheme: PawDarkTheme());
 
   @override
   void info(String msg, {StackTrace? stackTrace}) {

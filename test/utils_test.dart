@@ -6,7 +6,7 @@ import 'package:paw/src/colors/ansi.paw.dart';
 import 'package:paw/src/utils/utils.paw.dart';
 
 void main() {
-  final currentTheme = DarkTheme();
+  final currentTheme = PawDarkTheme();
 
   group('getCurrentTimeStamp', () {
     test('Correctly formats the timestamp', () {
@@ -53,7 +53,7 @@ void main() {
 
       expectedOutput = expectedOutput
           .split('\n')
-          .map((line) => '${DarkTheme().object.code}$line')
+          .map((line) => '${PawDarkTheme().object.code}$line')
           .join('\n');
 
       final prettyObject = PawUtils.getPrettyObject(

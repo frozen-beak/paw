@@ -15,7 +15,7 @@ import 'utils/utils.paw.dart';
 ///     super.shouldIncludeSourceInfo = false,
 ///     super.shouldPrintLogs = true,
 ///     super.shouldPrintName = true,
-///   }) : super(currentTheme: DarkTheme());
+///   }) : super(currentTheme: PawDarkTheme());
 ///
 ///   @override
 ///   void info(String message, {StackTrace? stackTrace}) {
@@ -49,7 +49,7 @@ abstract class PawInterface {
     this.maxStackTraces = 5,
     this.shouldIncludeSourceInfo = true,
     this.logLevel,
-  }) : currentTheme = currentTheme ?? DarkTheme();
+  }) : currentTheme = currentTheme ?? PawDarkTheme();
 
   ///
   /// Custom name for the logger, default to "Paw"
@@ -77,7 +77,7 @@ abstract class PawInterface {
   final bool shouldIncludeSourceInfo;
 
   ///
-  /// Color theme for styling Paw, default to `DarkTheme`
+  /// Color theme for styling Paw, default to `PawDarkTheme`
   ///
   final PawTheme currentTheme;
 

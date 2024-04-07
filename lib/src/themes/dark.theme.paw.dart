@@ -4,7 +4,7 @@ import 'interface.theme.paw.dart';
 ///
 /// A custom theme preset to customize Paw logging with a dark theme
 ///
-class DarkTheme extends PawTheme {
+class PawDarkTheme extends PawTheme {
   // text colors
 
   @override
