@@ -1,5 +1,4 @@
 import '../paw.dart';
-import 'themes/interface.theme.paw.dart';
 
 ///
 /// `Paw` - A Concrete Implementation of `PawInterface` for Enhanced Logging.

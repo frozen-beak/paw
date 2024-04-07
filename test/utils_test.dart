@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:paw/paw.dart';
 import 'package:test/test.dart';
 
-import 'package:paw/src/colors/ansi.paw.dart';
-import 'package:paw/src/utils/utils.paw.dart';
+import 'package:paw/src/ansi/colors.ansi.paw.dart';
+import 'package:paw/src/utils/logging.utils.paw.dart';
 
 void main() {
   final currentTheme = PawDarkTheme();
@@ -14,24 +14,25 @@ void main() {
 
       String expected = "14:30:45";
 
-      expect(PawUtils.getCurrentTimeStamp(time: fixedTime), equals(expected));
+      expect(
+          LoggingUtils.getCurrentTimeStamp(time: fixedTime), equals(expected));
     });
   });
 
   group('getSourceFileInfo', () {
     test('Returns correct file info with provided stack trace', () {
       final stacktrace = StackTrace.fromString("test.dart:10:11");
-      expect(PawUtils.getSourceFileInfo(stacktrace), isA<String>());
+      expect(LoggingUtils.getSourceFileInfo(stacktrace), isA<String>());
     });
 
     test('Returns empty string when includeSource is false', () {
-      expect(PawUtils.getSourceFileInfo(null, false), equals(''));
+      expect(LoggingUtils.getSourceFileInfo(null, false), equals(''));
     });
   });
 
   group('getPrettyStackTrace', () {
     test('Returns empty string for null stack trace', () {
-      final stackTrace = PawUtils.getPrettyStackTrace(
+      final stackTrace = LoggingUtils.getPrettyStackTrace(
         null,
         maxLines: 5,
         currentTheme: currentTheme,
@@ -56,7 +57,7 @@ void main() {
           .map((line) => '${PawDarkTheme().object.code}$line')
           .join('\n');
 
-      final prettyObject = PawUtils.getPrettyObject(
+      final prettyObject = LoggingUtils.getPrettyObject(
         simpleObject,
         currentTheme: currentTheme,
       );
@@ -66,7 +67,7 @@ void main() {
 
     test('Handles null object', () {
       expect(
-          PawUtils.getPrettyObject(
+          LoggingUtils.getPrettyObject(
             null,
             currentTheme: currentTheme,
           ),
@@ -76,7 +77,7 @@ void main() {
 
   group('getPrettyError', () {
     test('Returns empty string for null error', () {
-      final prettyError = PawUtils.getPrettyError(
+      final prettyError = LoggingUtils.getPrettyError(
         null,
         currentTheme: currentTheme,
       );
@@ -91,33 +92,33 @@ void main() {
       'getCorrectSizedTitle returns correctly sized title',
       () {
         expect(
-          PawUtils.getCorrectSizedTitle(PawLogLevels.info).length,
-          PawUtils.kRequiredTitleLength,
+          LoggingUtils.getCorrectSizedTitle(PawLogLevels.info).length,
+          LoggingUtils.kRequiredTitleLength,
         );
 
         expect(
-          PawUtils.getCorrectSizedTitle(PawLogLevels.trace).length,
-          PawUtils.kRequiredTitleLength,
+          LoggingUtils.getCorrectSizedTitle(PawLogLevels.trace).length,
+          LoggingUtils.kRequiredTitleLength,
         );
 
         expect(
-          PawUtils.getCorrectSizedTitle(PawLogLevels.debug).length,
-          PawUtils.kRequiredTitleLength,
+          LoggingUtils.getCorrectSizedTitle(PawLogLevels.debug).length,
+          LoggingUtils.kRequiredTitleLength,
         );
 
         expect(
-          PawUtils.getCorrectSizedTitle(PawLogLevels.warn).length,
-          PawUtils.kRequiredTitleLength,
+          LoggingUtils.getCorrectSizedTitle(PawLogLevels.warn).length,
+          LoggingUtils.kRequiredTitleLength,
         );
 
         expect(
-          PawUtils.getCorrectSizedTitle(PawLogLevels.error).length,
-          PawUtils.kRequiredTitleLength,
+          LoggingUtils.getCorrectSizedTitle(PawLogLevels.error).length,
+          LoggingUtils.kRequiredTitleLength,
         );
 
         expect(
-          PawUtils.getCorrectSizedTitle(PawLogLevels.fetal).length,
-          PawUtils.kRequiredTitleLength,
+          LoggingUtils.getCorrectSizedTitle(PawLogLevels.fetal).length,
+          LoggingUtils.kRequiredTitleLength,
         );
       },
     );

@@ -1,37 +1,3 @@
-/**
- * 
- * ANSI Color Codes to beautify Logging
- * 
- * Paw try to provide a simple and effective way to apply ANSI color codes 
- * and styles to text in terminal or console applications. These ANSI codes are 
- * special character sequences that control the formatting, such as color and 
- * style, of text displayed in environments that support ANSI escape codes. 
- * 
- * For more comprehensive details on ANSI colors, you can visit: 
- * [ANSI Colors Documentation](https://en.wikipedia.org/wiki/ANSI_escape_code) 
- * 
- * To explore more ANSI color options, refer to: 
- * [Various ANSI Color Codes](https://talyian.github.io/ansicolors/)
- * 
- */
-
-///
-/// A global constant ANSI Escape Code for Resetting Style
-///
-/// This constant represents the ANSI escape code used to reset the text
-/// formatting to its default state. It's analogous to an 'end tag' in HTML,
-/// ensuring that any style changes are contained only within the intended scope.
-///
-/// ### Example:
-/// ```
-/// debugPrint("${AnsiForegroundColors.red.code} This is red text $kAnsiEscapeCode");
-/// ```
-///
-/// In this example, escape code is used to ensure that the red text color does
-/// not apply to any subsequent text.
-///
-const String kAnsiEscapeCode = "\x1B[0m";
-
 ///
 /// ANSI Foreground Color Codes
 ///
@@ -159,49 +125,6 @@ enum AnsiBackgroundColor {
   /// ```
   /// // Using AnsiBgColor to set the background color to blue
   /// debugPrint("${AnsiBgColor.blue.code} This has a blue background ${kAnsiEscapeCode}");
-  /// ```
-  ///
-  final String code;
-}
-
-///
-/// Ansi Text Style Codes
-///
-/// This enum provides text styling options using ANSI codes, such as making
-/// text italic, bold, etc.
-///
-/// ### Example:
-/// ```
-/// debugPrint("${AnsiTextStyles.italic.code} This is italicized text ${kAnsiEscapeCode}");
-/// ```
-///
-/// In this example, `AnsiTextStyles.italic.code` is used to make the text italic.
-///
-enum AnsiTextStyles {
-  ///
-  /// Italic style ANSI code
-  ///
-  italic("\x1b[3m"),
-
-  ///
-  /// Bold style ANSI code
-  ///
-  bold("\x1b[1m");
-
-  ///
-  /// Constructor for defining a text style code.
-  ///
-  /// [code] represents the specific ANSI escape code for the text style.
-  ///
-  const AnsiTextStyles(this.code);
-
-  ///
-  /// The ANSI escape code for the text style.
-  ///
-  /// Example:
-  /// ```
-  /// // Using AnsiStyle to make text italic
-  /// debugPrint("${AnsiStyle.italic.code} This is italicized text ${kAnsiEscapeCode}");
   /// ```
   ///
   final String code;

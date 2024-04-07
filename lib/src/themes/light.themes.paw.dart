@@ -1,10 +1,10 @@
-import '../colors/ansi.paw.dart';
-import 'interface.theme.paw.dart';
+import '../ansi/colors.ansi.paw.dart';
+import 'interface.themes.paw.dart';
 
 ///
-/// A custom theme preset to customize Paw logging with a dark theme
+/// A custom theme preset to customize Paw logging with a light theme
 ///
-class PawDarkTheme extends PawTheme {
+class PawLightTheme extends PawTheme {
   // text colors
 
   @override
