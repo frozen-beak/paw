@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:paw/paw.dart';
+import 'package:paw/src/ansi/ansi.paw.dart';
 import 'package:test/test.dart';
 
-import 'package:paw/src/ansi/colors.ansi.paw.dart';
 import 'package:paw/src/utils/logging.utils.paw.dart';
 
 void main() {

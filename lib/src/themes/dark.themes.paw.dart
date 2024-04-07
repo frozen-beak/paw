@@ -27,13 +27,13 @@ class PawDarkTheme extends PawTheme {
   // background colors
 
   @override
-  AnsiBackgroundColor get bgDebug => AnsiBackgroundColor.gray;
+  AnsiBackgroundColor get bgDebug => AnsiBackgroundColor.darkGray;
 
   @override
   AnsiBackgroundColor get bgError => AnsiBackgroundColor.darkPink;
 
   @override
-  AnsiBackgroundColor get bgFetal => AnsiBackgroundColor.maroon;
+  AnsiBackgroundColor get bgFetal => AnsiBackgroundColor.brown;
 
   @override
   AnsiBackgroundColor get bgInfo => AnsiBackgroundColor.blue;

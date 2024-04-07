@@ -11,10 +11,10 @@ class PawLightTheme extends PawTheme {
   AnsiForegroundColors get heading => AnsiForegroundColors.white;
 
   @override
-  AnsiForegroundColors get message => AnsiForegroundColors.softPink;
+  AnsiForegroundColors get message => AnsiForegroundColors.navyBlue;
 
   @override
-  AnsiForegroundColors get object => AnsiForegroundColors.lightPurple;
+  AnsiForegroundColors get object => AnsiForegroundColors.gray;
 
   // accent colors
 
@@ -27,13 +27,13 @@ class PawLightTheme extends PawTheme {
   // background colors
 
   @override
-  AnsiBackgroundColor get bgDebug => AnsiBackgroundColor.gray;
+  AnsiBackgroundColor get bgDebug => AnsiBackgroundColor.darkGray;
 
   @override
   AnsiBackgroundColor get bgError => AnsiBackgroundColor.darkPink;
 
   @override
-  AnsiBackgroundColor get bgFetal => AnsiBackgroundColor.maroon;
+  AnsiBackgroundColor get bgFetal => AnsiBackgroundColor.brown;
 
   @override
   AnsiBackgroundColor get bgInfo => AnsiBackgroundColor.blue;
@@ -45,5 +45,5 @@ class PawLightTheme extends PawTheme {
   AnsiBackgroundColor get bgWarn => AnsiBackgroundColor.pink;
 
   @override
-  AnsiBackgroundColor get infoCardBg => AnsiBackgroundColor.lightGray;
+  AnsiBackgroundColor get infoCardBg => AnsiBackgroundColor.gray;
 }
