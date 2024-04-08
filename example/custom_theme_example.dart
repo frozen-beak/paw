@@ -1,37 +1,49 @@
 import 'package:paw/paw.dart';
 
 ///
-/// This is an example showcasing how to use the Paw logging library in Flutter.
-/// You can run this example by executing `dart example/main.dart` in your terminal.
+/// Custom theme created using [PawCustomTheme] to customise colors of the logs
+/// printed on the consol with [Paw]
+///
+final kCustomTheme = PawCustomTheme(
+  heading: AnsiForegroundColors.black,
+  message: AnsiForegroundColors.softPink,
+  object: AnsiForegroundColors.gray,
+  errorMessage: AnsiForegroundColors.orange,
+  errorObject: AnsiForegroundColors.red,
+  bgWarn: AnsiBackgroundColor.lightGray,
+  bgInfo: AnsiBackgroundColor.blue,
+  bgTrace: AnsiBackgroundColor.darkPink,
+  bgDebug: AnsiBackgroundColor.gray,
+  bgError: AnsiBackgroundColor.darkPink,
+  bgFetal: AnsiBackgroundColor.brown,
+  infoCardBg: AnsiBackgroundColor.custom(r: 204, g: 255, b: 153),
+);
+
+///
+/// This is an example showcasing how to use the Paw logging library with your
+/// custom theme.
+///
+/// You can run this example by executing `dart example/custom_theme_example.dart`
+/// in your terminal.
 ///
 void main() {
   ///
-  /// Create an instance of [paw] with custom configurations.
+  /// Create an instance of [paw] with custom configurations. This is how you
+  /// interact with the logging system.
   ///
   final paw = Paw(
-    // optional, defaults to [PAW]
     title: "MyApp",
-
-    // optional, defaults to [true]
     shouldIncludeSourceFileInfo: true,
-
-    // optional, defaults to [true]
     shouldIncludeTitle: true,
-
-    // optional, defaults to [true]
     shouldPrint: true,
-
-    // optional, defaults to [5]
     stackTraceToPrint: 5,
-
-    // optional, defaults to [PawDarkTheme]
-    theme: PawDarkTheme(),
+    theme: kCustomTheme,
 
     // Note: When the `level` is set to [null], Paw is allowed to print logs
     // of all levels. To only print logs of a certain level, set the `level` to
     // that specific level, e.g. [PawLogLevels.fetal] to only print fetal logs
 
-    level: null, // this allows paw to print all the logs, defaults to [null]
+    level: PawLogLevels.fetal, // this allows paw to print all the logs,
   );
 
   ///
@@ -51,7 +63,6 @@ void main() {
 
   ///
   /// Log a warning message.
-  /// 
   /// Warnings are useful for non-critical issues that should be
   /// brought to attention.
   ///

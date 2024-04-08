@@ -1,5 +1,6 @@
-import '../paw.dart';
-import 'themes/interface.theme.paw.dart';
+import 'interface.paw.dart';
+import 'themes/themes.paw.dart';
+import 'utils/utils.paw.dart';
 
 ///
 /// `Paw` - A Concrete Implementation of `PawInterface` for Enhanced Logging.
@@ -17,7 +18,7 @@ import 'themes/interface.theme.paw.dart';
 ///   shouldPrint: true,
 ///   stackTraceToPrint: 5,
 ///   level: PawLogLevels.fetal,
-///   theme: DarkTheme(),
+///   theme: PawDarkTheme(),
 /// );
 ///
 /// // Log different types of messages
@@ -82,7 +83,7 @@ class Paw extends PawInterface {
   ///
   /// Color theme for styling Paw
   ///
-  /// Default to `DarkTheme`
+  /// Default to `PawDarkTheme`
   ///
   final PawTheme? theme;
 
@@ -112,6 +113,6 @@ class Paw extends PawInterface {
           shouldIncludeSourceInfo: shouldIncludeSourceFileInfo,
           shouldPrintName: shouldIncludeTitle,
           logLevel: level,
-          currentTheme: DarkTheme(),
+          currentTheme: theme ?? PawDarkTheme(),
         );
 }

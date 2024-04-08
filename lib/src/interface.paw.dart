@@ -1,6 +1,5 @@
-import '../paw.dart';
-import 'colors/ansi.paw.dart';
-import 'themes/interface.theme.paw.dart';
+import 'ansi/ansi.paw.dart';
+import 'themes/themes.paw.dart';
 import 'utils/utils.paw.dart';
 
 ///
@@ -15,7 +14,7 @@ import 'utils/utils.paw.dart';
 ///     super.shouldIncludeSourceInfo = false,
 ///     super.shouldPrintLogs = true,
 ///     super.shouldPrintName = true,
-///   }) : super(currentTheme: DarkTheme());
+///   }) : super(currentTheme: PawDarkTheme());
 ///
 ///   @override
 ///   void info(String message, {StackTrace? stackTrace}) {
@@ -49,7 +48,7 @@ abstract class PawInterface {
     this.maxStackTraces = 5,
     this.shouldIncludeSourceInfo = true,
     this.logLevel,
-  }) : currentTheme = currentTheme ?? DarkTheme();
+  }) : currentTheme = currentTheme ?? PawDarkTheme();
 
   ///
   /// Custom name for the logger, default to "Paw"
@@ -77,7 +76,7 @@ abstract class PawInterface {
   final bool shouldIncludeSourceInfo;
 
   ///
-  /// Color theme for styling Paw, default to `DarkTheme`
+  /// Color theme for styling Paw, default to `PawDarkTheme`
   ///
   final PawTheme currentTheme;
 
@@ -111,7 +110,7 @@ abstract class PawInterface {
     // Do nothing if logLevel is set to a specific log level
     if (logLevel != null && logLevel != PawLogLevels.info) return;
 
-    final String decoratedHeading = PawUtils.getDecoratedLogHeading(
+    final String decoratedHeading = LoggingUtils.getDecoratedLogHeading(
       PawLogLevels.info,
       shouldPrintName: shouldPrintName,
       name: name,
@@ -119,18 +118,18 @@ abstract class PawInterface {
       currentTheme: currentTheme,
     );
 
-    final decoratedInfoCard = PawUtils.getDecoratedInfoCard(
+    final decoratedInfoCard = LoggingUtils.getDecoratedInfoCard(
       shouldIncludeSourceFileInfo: shouldIncludeSourceInfo,
       currentTheme: currentTheme,
       stackTrace: stackTrace,
     );
 
-    final decoratedMessage = PawUtils.getDecoratedString(
+    final decoratedMessage = LoggingUtils.getDecoratedString(
       message,
       fgColor: currentTheme.message,
     );
 
-    PawUtils.log("$decoratedHeading$decoratedInfoCard $decoratedMessage");
+    LoggingUtils.log("$decoratedHeading$decoratedInfoCard $decoratedMessage");
   }
 
   ///
@@ -155,7 +154,7 @@ abstract class PawInterface {
     // Do nothing if logLevel is set to a specific log level
     if (logLevel != null && logLevel != PawLogLevels.trace) return;
 
-    final String decoratedHeading = PawUtils.getDecoratedLogHeading(
+    final String decoratedHeading = LoggingUtils.getDecoratedLogHeading(
       PawLogLevels.trace,
       shouldPrintName: shouldPrintName,
       name: name,
@@ -163,18 +162,18 @@ abstract class PawInterface {
       currentTheme: currentTheme,
     );
 
-    final decoratedInfoCard = PawUtils.getDecoratedInfoCard(
+    final decoratedInfoCard = LoggingUtils.getDecoratedInfoCard(
       shouldIncludeSourceFileInfo: shouldIncludeSourceInfo,
       currentTheme: currentTheme,
       stackTrace: stackTrace,
     );
 
-    final decoratedMessage = PawUtils.getDecoratedString(
+    final decoratedMessage = LoggingUtils.getDecoratedString(
       message,
       fgColor: currentTheme.message,
     );
 
-    PawUtils.log("$decoratedHeading$decoratedInfoCard $decoratedMessage");
+    LoggingUtils.log("$decoratedHeading$decoratedInfoCard $decoratedMessage");
   }
 
   ///
@@ -200,7 +199,7 @@ abstract class PawInterface {
     // Do nothing if logLevel is set to a specific log level
     if (logLevel != null && logLevel != PawLogLevels.debug) return;
 
-    final String decoratedHeading = PawUtils.getDecoratedLogHeading(
+    final String decoratedHeading = LoggingUtils.getDecoratedLogHeading(
       PawLogLevels.debug,
       shouldPrintName: shouldPrintName,
       name: name,
@@ -208,18 +207,18 @@ abstract class PawInterface {
       currentTheme: currentTheme,
     );
 
-    final decoratedInfoCard = PawUtils.getDecoratedInfoCard(
+    final decoratedInfoCard = LoggingUtils.getDecoratedInfoCard(
       shouldIncludeSourceFileInfo: shouldIncludeSourceInfo,
       currentTheme: currentTheme,
       stackTrace: stackTrace,
     );
 
-    final prettyObject = PawUtils.getPrettyObject(
+    final prettyObject = LoggingUtils.getPrettyObject(
       obj,
       currentTheme: currentTheme,
     );
 
-    PawUtils.log("$decoratedHeading$decoratedInfoCard \n$prettyObject");
+    LoggingUtils.log("$decoratedHeading$decoratedInfoCard \n$prettyObject");
   }
 
   ///
@@ -244,7 +243,7 @@ abstract class PawInterface {
     // Do nothing if logLevel is set to a specific log level
     if (logLevel != null && logLevel != PawLogLevels.warn) return;
 
-    final String decoratedHeading = PawUtils.getDecoratedLogHeading(
+    final String decoratedHeading = LoggingUtils.getDecoratedLogHeading(
       PawLogLevels.warn,
       shouldPrintName: shouldPrintName,
       name: name,
@@ -252,19 +251,19 @@ abstract class PawInterface {
       currentTheme: currentTheme,
     );
 
-    final decoratedInfoCard = PawUtils.getDecoratedInfoCard(
+    final decoratedInfoCard = LoggingUtils.getDecoratedInfoCard(
       shouldIncludeSourceFileInfo: shouldIncludeSourceInfo,
       currentTheme: currentTheme,
       stackTrace: stackTrace,
     );
 
-    final decoratedMessage = PawUtils.getDecoratedString(
+    final decoratedMessage = LoggingUtils.getDecoratedString(
       message,
       fgColor: currentTheme.errorMessage,
       textStyle: AnsiTextStyles.italic,
     );
 
-    PawUtils.log("$decoratedHeading$decoratedInfoCard $decoratedMessage");
+    LoggingUtils.log("$decoratedHeading$decoratedInfoCard $decoratedMessage");
   }
 
   ///
@@ -295,7 +294,7 @@ abstract class PawInterface {
     // Do nothing if logLevel is set to a specific log level
     if (logLevel != null && logLevel != PawLogLevels.error) return;
 
-    final String decoratedHeading = PawUtils.getDecoratedLogHeading(
+    final String decoratedHeading = LoggingUtils.getDecoratedLogHeading(
       PawLogLevels.error,
       shouldPrintName: shouldPrintName,
       name: name,
@@ -303,36 +302,36 @@ abstract class PawInterface {
       currentTheme: currentTheme,
     );
 
-    final decoratedInfoCard = PawUtils.getDecoratedInfoCard(
+    final decoratedInfoCard = LoggingUtils.getDecoratedInfoCard(
       shouldIncludeSourceFileInfo: shouldIncludeSourceInfo,
       currentTheme: currentTheme,
       stackTrace: stackTrace,
     );
 
-    final decoratedMessage = PawUtils.getDecoratedString(
+    final decoratedMessage = LoggingUtils.getDecoratedString(
       message,
       fgColor: currentTheme.errorMessage,
     );
 
-    final prettyError = PawUtils.getPrettyError(
+    final prettyError = LoggingUtils.getPrettyError(
       error,
       currentTheme: currentTheme,
     );
 
-    final prettyStacktrace = PawUtils.getPrettyStackTrace(
+    final prettyStacktrace = LoggingUtils.getPrettyStackTrace(
       stackTrace,
       maxLines: maxStackTraces,
       currentTheme: currentTheme,
     );
 
-    final decoratedDivider = PawUtils.getDecoratedString(
+    final decoratedDivider = LoggingUtils.getDecoratedString(
       "----------",
       fgColor: currentTheme.errorMessage,
     );
 
-    PawUtils.log("$decoratedHeading$decoratedInfoCard $decoratedMessage");
+    LoggingUtils.log("$decoratedHeading$decoratedInfoCard $decoratedMessage");
 
-    PawUtils.log(
+    LoggingUtils.log(
       "$decoratedDivider\n$prettyError\n${prettyStacktrace.isNotEmpty ? "\n$prettyStacktrace\n" : ""}$decoratedDivider",
     );
   }
@@ -364,7 +363,7 @@ abstract class PawInterface {
     // Do nothing if logLevel is set to a specific log level
     if (logLevel != null && logLevel != PawLogLevels.fetal) return;
 
-    final String decoratedHeading = PawUtils.getDecoratedLogHeading(
+    final String decoratedHeading = LoggingUtils.getDecoratedLogHeading(
       PawLogLevels.fetal,
       shouldPrintName: shouldPrintName,
       name: name,
@@ -372,36 +371,36 @@ abstract class PawInterface {
       currentTheme: currentTheme,
     );
 
-    final decoratedInfoCard = PawUtils.getDecoratedInfoCard(
+    final decoratedInfoCard = LoggingUtils.getDecoratedInfoCard(
       shouldIncludeSourceFileInfo: shouldIncludeSourceInfo,
       currentTheme: currentTheme,
       stackTrace: stackTrace,
     );
 
-    final decoratedMessage = PawUtils.getDecoratedString(
+    final decoratedMessage = LoggingUtils.getDecoratedString(
       message,
       fgColor: currentTheme.errorMessage,
     );
 
-    final prettyError = PawUtils.getPrettyError(
+    final prettyError = LoggingUtils.getPrettyError(
       error,
       currentTheme: currentTheme,
     );
 
-    final prettyStacktrace = PawUtils.getPrettyStackTrace(
+    final prettyStacktrace = LoggingUtils.getPrettyStackTrace(
       stackTrace,
       maxLines: maxStackTraces,
       currentTheme: currentTheme,
     );
 
-    final decoratedDivider = PawUtils.getDecoratedString(
+    final decoratedDivider = LoggingUtils.getDecoratedString(
       "----------",
       fgColor: currentTheme.errorMessage,
     );
 
-    PawUtils.log("$decoratedHeading$decoratedInfoCard $decoratedMessage");
+    LoggingUtils.log("$decoratedHeading$decoratedInfoCard $decoratedMessage");
 
-    PawUtils.log(
+    LoggingUtils.log(
       "$decoratedDivider\n$prettyError\n${prettyStacktrace.isNotEmpty ? "\n$prettyStacktrace\n" : ""}$decoratedDivider",
     );
   }

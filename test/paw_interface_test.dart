@@ -2,14 +2,14 @@ import 'package:test/test.dart';
 import 'package:paw/paw.dart';
 
 void main() {
-  group('Paw Tests', () {
+  group('PawInterface', () {
     late MockLogger paw;
 
     setUp(() {
       paw = MockLogger();
     });
 
-    test('info should print correctly when shouldPrintLogs is true', () {
+    test('info prints correctly when shouldPrintLogs is true', () {
       paw.info('Test Info');
 
       expect(paw.logOutputs.isNotEmpty, isTrue);
@@ -18,7 +18,7 @@ void main() {
       paw.clearLogOutputs();
     });
 
-    test('trace should print correctly when shouldPrintLogs is true', () {
+    test('trace prints correctly when shouldPrintLogs is true', () {
       paw.trace('Trace Log');
 
       expect(paw.logOutputs.isNotEmpty, isTrue);
@@ -27,7 +27,7 @@ void main() {
       paw.clearLogOutputs();
     });
 
-    test('warn should print correctly when shouldPrintLogs is true', () {
+    test('warn prints correctly when shouldPrintLogs is true', () {
       paw.warn('Test Warn');
 
       expect(paw.logOutputs.isNotEmpty, isTrue);
@@ -36,7 +36,7 @@ void main() {
       paw.clearLogOutputs();
     });
 
-    test('debug should print correctly when shouldPrintLogs is true', () {
+    test('debug prints correctly when shouldPrintLogs is true', () {
       paw.debug('Test Debug');
 
       expect(paw.logOutputs.isNotEmpty, isTrue);
@@ -45,7 +45,7 @@ void main() {
       paw.clearLogOutputs();
     });
 
-    test('error should print correctly when shouldPrintLogs is true', () {
+    test('error prints correctly when shouldPrintLogs is true', () {
       try {
         throw Exception('Test Exception');
       } catch (e, stackTrace) {
@@ -58,7 +58,7 @@ void main() {
       paw.clearLogOutputs();
     });
 
-    test('fetal should print correctly when shouldPrintLogs is true', () {
+    test('fetal prints correctly when shouldPrintLogs is true', () {
       try {
         throw Exception('Test Exception');
       } catch (e, stackTrace) {
@@ -85,7 +85,9 @@ class MockLogger extends PawInterface {
     super.shouldIncludeSourceInfo = true,
     super.shouldPrintLogs = true,
     super.shouldPrintName = true,
-  }) : super(currentTheme: DarkTheme());
+  }) : super(
+          currentTheme: PawDarkTheme(),
+        );
 
   @override
   void info(String msg, {StackTrace? stackTrace}) {

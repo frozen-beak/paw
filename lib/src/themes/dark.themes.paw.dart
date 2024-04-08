@@ -1,10 +1,10 @@
-import '../colors/ansi.paw.dart';
-import 'interface.theme.paw.dart';
+import '../ansi/colors.ansi.paw.dart';
+import 'interface.themes.paw.dart';
 
 ///
 /// A custom theme preset to customize Paw logging with a dark theme
 ///
-class DarkTheme extends PawTheme {
+class PawDarkTheme extends PawTheme {
   // text colors
 
   @override
@@ -27,13 +27,13 @@ class DarkTheme extends PawTheme {
   // background colors
 
   @override
-  AnsiBackgroundColor get bgDebug => AnsiBackgroundColor.gray;
+  AnsiBackgroundColor get bgDebug => AnsiBackgroundColor.darkGray;
 
   @override
   AnsiBackgroundColor get bgError => AnsiBackgroundColor.darkPink;
 
   @override
-  AnsiBackgroundColor get bgFetal => AnsiBackgroundColor.maroon;
+  AnsiBackgroundColor get bgFetal => AnsiBackgroundColor.brown;
 
   @override
   AnsiBackgroundColor get bgInfo => AnsiBackgroundColor.blue;

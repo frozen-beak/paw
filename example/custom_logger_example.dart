@@ -1,20 +1,36 @@
 import 'package:paw/paw.dart';
 
+///
+/// [MyLogger] is a custom logger class created with [PawInterface] to help
+/// enhance the functionality of Paw 🐾
+///
 class MyLogger extends PawInterface {
+  ///
+  /// All the fields are optional, you can edit them according to your needs
+  ///
   MyLogger({
     super.name = "MyApp",
     super.maxStackTraces = 5,
     super.shouldIncludeSourceInfo = false,
     super.shouldPrintLogs = true,
-    super.shouldPrintName = true,
-  }) : super(currentTheme: DarkTheme());
+    super.shouldPrintName = false,
+  }) : super(
+          currentTheme: PawDarkTheme(),
+        );
 
+  ///
+  /// You can override all the log levels to enhance their functionality
+  ///
   @override
   void info(String msg, {StackTrace? stackTrace}) {
     super.info(msg, stackTrace: stackTrace);
 
     print("Some task can be done after logging info");
   }
+
+  //
+  // You can override any log level to enhance its functionality
+  //
 }
 
 ///
@@ -30,6 +46,10 @@ void main() {
   /// the logging system.
   ///
   final logger = MyLogger();
+
+  print("");
+  print("");
+  print("");
 
   ///
   /// Log an informational message.
@@ -84,4 +104,8 @@ void main() {
       error: e,
     );
   }
+
+  print("");
+  print("");
+  print("");
 }
