@@ -1,20 +1,36 @@
 import 'package:paw/paw.dart';
 
+///
+/// [MyLogger] is a custom logger class created with [PawInterface] to help
+/// enhance the functionality of Paw 🐾
+///
 class MyLogger extends PawInterface {
+  ///
+  /// All the fields are optional, you can edit them according to your needs
+  ///
   MyLogger({
     super.name = "MyApp",
     super.maxStackTraces = 5,
     super.shouldIncludeSourceInfo = false,
     super.shouldPrintLogs = true,
-    super.shouldPrintName = true,
-  });
+    super.shouldPrintName = false,
+  }) : super(
+          currentTheme: PawDarkTheme(),
+        );
 
+  ///
+  /// You can override all the log levels to enhance their functionality
+  ///
   @override
   void info(String msg, {StackTrace? stackTrace}) {
     super.info(msg, stackTrace: stackTrace);
 
     print("Some task can be done after logging info");
   }
+
+  //
+  // You can override any log level to enhance its functionality
+  //
 }
 
 ///
@@ -31,6 +47,10 @@ void main() {
   ///
   final logger = MyLogger();
 
+  print("");
+  print("");
+  print("");
+
   ///
   /// Log an informational message.
   ///
@@ -38,6 +58,13 @@ void main() {
   /// understanding the app's behavior.
   ///
   logger.info("This is an informational message");
+
+  ///
+  /// Log a tracing message
+  ///
+  /// Use this for tracking code flow and high-volume logs
+  ///
+  logger.trace("This is a trace log");
 
   ///
   /// Log a warning message.
@@ -64,13 +91,21 @@ void main() {
   try {
     throw UnsupportedError("Oops! You've forgotten to implement this feature");
   } catch (e, stackTrace) {
-    // Log an error with a message, error object, and stack trace
+    // Log an error with a message and error object
     logger.error(
       'An unexpected error occurred',
+      error: e,
+    );
+
+    // Log a fetal log with a message, error object, and stack trace
+    logger.fetal(
+      'An unexpected error occurred',
       stackTrace: stackTrace,
-      error: UnsupportedError(
-        "Oops! You've forgotten to implement this feature",
-      ),
+      error: e,
     );
   }
+
+  print("");
+  print("");
+  print("");
 }
