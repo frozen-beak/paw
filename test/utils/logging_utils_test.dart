@@ -240,7 +240,8 @@ void main() {
   });
 
   group('LoggingUtils.log', () {
-    test('LoggingUtils.log returns log message when shouldPrintLog is true', () {
+    test('LoggingUtils.log returns log message when shouldPrintLog is true',
+        () {
       final logMessage = 'Log message';
       final shouldPrintLog = true;
 

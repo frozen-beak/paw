@@ -51,7 +51,7 @@ void main() {
 
   ///
   /// Log a warning message.
-  /// 
+  ///
   /// Warnings are useful for non-critical issues that should be
   /// brought to attention.
   ///
