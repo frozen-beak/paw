@@ -6,22 +6,32 @@ import 'package:paw/paw.dart';
 ///
 void main() {
   ///
-  /// Create an instance of [paw] with custom configurations. This is how you interact with
-  /// the logging system.
+  /// Create an instance of [paw] with custom configurations.
   ///
   final paw = Paw(
+    // optional, defaults to [PAW]
     title: "MyApp",
+
+    // optional, defaults to [true]
     shouldIncludeSourceFileInfo: true,
+
+    // optional, defaults to [true]
     shouldIncludeTitle: true,
+
+    // optional, defaults to [true]
     shouldPrint: true,
+
+    // optional, defaults to [5]
     stackTraceToPrint: 5,
+
+    // optional, defaults to [PawDarkTheme]
     theme: PawDarkTheme(),
 
     // Note: When the `level` is set to [null], Paw is allowed to print logs
     // of all levels. To only print logs of a certain level, set the `level` to
     // that specific level, e.g. [PawLogLevels.fetal] to only print fetal logs
 
-    level: null, // this allows paw to print all the logs,
+    level: null, // this allows paw to print all the logs, defaults to [null]
   );
 
   ///
@@ -41,6 +51,7 @@ void main() {
 
   ///
   /// Log a warning message.
+  /// 
   /// Warnings are useful for non-critical issues that should be
   /// brought to attention.
   ///

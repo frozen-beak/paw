@@ -1,7 +1,7 @@
 import 'package:paw/paw.dart';
 
 ///
-/// Custom theme create using [PawCustomTheme] to customise colors of the logs
+/// Custom theme created using [PawCustomTheme] to customise colors of the logs
 /// printed on the consol with [Paw]
 ///
 final kCustomTheme = PawCustomTheme(

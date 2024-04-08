@@ -44,3 +44,12 @@ Migration Guide:
    - Implement the required methods and add custom functionality as needed.
 
 For more details refer [here](https://github.com/AdityaMotale/paw/issues/3)
+
+## 0.0.4
+
+- Expanded `AnsiColors` with new colors and introduced the custom function to allow users to create their
+  own ANSI foreground and background colors.
+- Improved test coverage with additional unit tests.
+- Introduced themes to style Paw logs, including a Dark and a Light theme to choose from, along with the
+  ability to create custom themes using `PawCustomTheme` with custom colors using RGB values.
+- Updated docs for the new features
